@@ -1,7 +1,7 @@
 {
-  "name": "boilermaker",
+  "name": "genie-in-a-bottle",
   "version": "1.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "E-commerce store for bottled goods",
   "engines": {
     "node": ">= 7.0.0"
   },
@@ -18,7 +18,7 @@
     "start-server": "NODE_ENV='development' nodemon server -e html,js,scss --ignore public",
     "test": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/boilermaker-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --compilers js:babel-register"
   },
-  "author": "",
+  "author": "The Genies",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.15.3",
