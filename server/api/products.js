@@ -10,6 +10,15 @@ router.route('/')
         res.json(allProducts);
       })
       .catch(next);
+  })
+  .post((req, res, next) => {
+    Product.findOrCreate({
+      where: req.body,
+    })
+      .then((createdProduct) => {
+        res.status(201).json(createdProduct);
+      })
+      .catch(next);
   });
 
 router.route('/:productId')
