@@ -1,14 +1,20 @@
-const router = require('express').Router()
-const {User} = require('../db/models')
-module.exports = router
+const router = require('express').Router();
+const { User } = require('../db/models');
+
+module.exports = router;
 
 router.get('/', (req, res, next) => {
-  User.findAll({
-    // explicitly select only the id and email fields - even though
-    // users' passwords are encrypted, it won't help if we just
-    // send everything to anyone who asks!
-    attributes: ['id', 'email']
-  })
+  User.findAll()
     .then(users => res.json(users))
-    .catch(next)
-})
+    .catch(next);
+});
+
+router.post('/', (req, res, next) => {
+  User.findOrCreate({
+    where: req.body,
+  })
+    .then(createdUser =>
+      res.status(201)
+        .json(createdUser))
+    .catch(next);
+});

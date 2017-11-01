@@ -1,33 +1,56 @@
 /* global describe beforeEach it */
 
-const {expect} = require('chai')
-const request = require('supertest')
-const db = require('../db')
-const app = require('../index')
-const User = db.model('user')
+const { expect } = require('chai');
+const request = require('supertest');
+const db = require('../db');
+const app = require('../index');
+
+const User = db.model('user');
 
 describe('User routes', () => {
-  beforeEach(() => {
-    return db.sync({force: true})
-  })
+  beforeEach(() => db.sync({ force: true }));
 
   describe('/api/users/', () => {
-    const codysEmail = 'cody@puppybook.com'
+    beforeEach(() => User.bulkCreate([{
+      name: 'roger',
+      email: 's@gmail.com',
+      password: 'fdf',
+      salt: '1',
+      googleId: 'brian',
+    }, {
+      name: 'brian',
+      email: 'thisisbrian@gmail.com',
+      password: 'thisismypassword',
+      salt: 'andpepper',
+      googleId: 'BRIAN',
+    }]));
 
-    beforeEach(() => {
-      return User.create({
-        email: codysEmail
+    it('GET /api/users', () => request(app)
+      .get('/api/users')
+      .expect(200)
+      .then((res) => {
+        expect(res.body).to.be.an('array');
+        expect(res.body[0].name).to.be.equal('roger');
+        expect(res.body[0].email).to.be.equal('s@gmail.com');
+        expect(res.body.length).to.be.equal(2);
+      }));
+
+    it('POST /api/users', () => request(app)
+      .post('/api/users')
+      .send({
+        name: 'aname',
+        email: 'donkeybrains@gmail.com',
+        password: 'birds',
+        salt: 'milksteak',
+        googleId: 'stillbrian',
       })
-    })
-
-    it('GET /api/users', () => {
-      return request(app)
-        .get('/api/users')
-        .expect(200)
-        .then(res => {
-          expect(res.body).to.be.an('array')
-          expect(res.body[0].email).to.be.equal(codysEmail)
-        })
-    })
-  }) // end describe('/api/users')
-}) // end describe('User routes')
+      .expect(201)
+      .then((res) => {
+        const createdUser = res.body[0];
+        const wasCreated = res.body[1];
+        expect(createdUser).to.be.an('object');
+        expect(createdUser.email).to.be.equal('donkeybrains@gmail.com');
+        expect(wasCreated).to.be.equal(true);
+      }));
+  });
+});
