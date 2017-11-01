@@ -20,7 +20,6 @@ describe('Address model', () => {
       })
         .then((address) => {
           testAddress = address;
-          console.log('******', address.state);
         }));
 
       it('returns true if state is correct', () => {
