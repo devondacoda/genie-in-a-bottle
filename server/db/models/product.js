@@ -15,7 +15,8 @@ const Product = db.define('product', {
     allowNull: false,
     get() {
       // Format the currency to include a '$' sign
-      return `$${this.getDataValue('price')}`;
+      const formattedPrice = this.getDataValue('price').toFixed(2);
+      return `$${formattedPrice}`;
     },
   },
   picture: {
@@ -29,6 +30,9 @@ const Product = db.define('product', {
     type: Sequelize.INTEGER,
     defaultValue: 0,
     allowNull: false,
+    validate: {
+      min: 0,
+    },
   },
   category: {
     type: Sequelize.STRING,
