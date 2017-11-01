@@ -8,3 +8,13 @@ router.get('/', (req, res, next) => {
     .then(users => res.json(users))
     .catch(next);
 });
+
+router.post('/', (req, res, next) => {
+  User.findOrCreate({
+    where: req.body,
+  })
+    .then(createdUser =>
+      res.status(201)
+        .json(createdUser))
+    .catch(next);
+});

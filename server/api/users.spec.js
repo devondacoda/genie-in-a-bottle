@@ -31,5 +31,22 @@ describe('User routes', () => {
         expect(res.body[0].email).to.be.equal('s@gmail.com');
         expect(res.body.length).to.be.equal(2);
       }));
+
+    it('POST /api/users', () => request(app)
+      .post('/api/users')
+      .send({
+        email: 'donkeybrains@gmail.com',
+        password: 'birds',
+        salt: 'milksteak',
+        googleId: 'stillbrian',
+      })
+      .expect(201)
+      .then((res) => {
+        const createdUser = res.body[0];
+        const wasCreated = res.body[1];
+        expect(createdUser).to.be.an('object');
+        expect(createdUser.email).to.be.equal('donkeybrains@gmail.com');
+        expect(wasCreated).to.be.equal(true);
+      }));
   });
 });
