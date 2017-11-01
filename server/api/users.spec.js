@@ -16,7 +16,7 @@ describe('User routes', () => {
       password: 'fdf',
       salt: '1',
       googleId: 'brian',
-    },{
+    }, {
       email: 'thisisbrian@gmail.com',
       password: 'thisismypassword',
       salt: 'andpepper',
@@ -30,6 +30,20 @@ describe('User routes', () => {
         expect(res.body).to.be.an('array');
         expect(res.body[0].email).to.be.equal('s@gmail.com');
         expect(res.body.length).to.be.equal(2);
+      }));
+
+    it('POST /api/users', () => request(app)
+      .post('/api/users')
+      .send({
+        email: 'donkeybrains@gmail.com',
+        password: 'birds',
+        salt: 'milksteak',
+        googleId: 'stillbrian',
+      })
+      .expect(201)
+      .then((res) => {
+        expect(res.body).to.be.an('object');
+        expect(res.body.email).to.be.equal('donkeybrains@gmail.com');
       }));
   });
 });
