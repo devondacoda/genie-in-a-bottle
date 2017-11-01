@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const Sequelize = require('sequelize');
 const db = require('../db');
-// ADDED THIS COMMENT SO I CAN PUSH TO NEW BRANCH
+
 const User = db.define('user', {
   name: {
     type: Sequelize.STRING,
