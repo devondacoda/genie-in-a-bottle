@@ -78,10 +78,4 @@ const Address = db.define('address', {
   },
 });
 
-// Address.hook('beforeValidate', (address) => {
-//   const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(address.zip)
-//   if(isValidZip) => 
-// })
-
-
 module.exports = Address;

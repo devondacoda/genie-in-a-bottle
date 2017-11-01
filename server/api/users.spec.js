@@ -12,11 +12,13 @@ describe('User routes', () => {
 
   describe('/api/users/', () => {
     beforeEach(() => User.bulkCreate([{
+      name: 'roger',
       email: 's@gmail.com',
       password: 'fdf',
       salt: '1',
       googleId: 'brian',
     }, {
+      name: 'brian',
       email: 'thisisbrian@gmail.com',
       password: 'thisismypassword',
       salt: 'andpepper',
@@ -28,6 +30,7 @@ describe('User routes', () => {
       .expect(200)
       .then((res) => {
         expect(res.body).to.be.an('array');
+        expect(res.body[0].name).to.be.equal('roger');
         expect(res.body[0].email).to.be.equal('s@gmail.com');
         expect(res.body.length).to.be.equal(2);
       }));
@@ -35,6 +38,7 @@ describe('User routes', () => {
     it('POST /api/users', () => request(app)
       .post('/api/users')
       .send({
+        name: 'aname',
         email: 'donkeybrains@gmail.com',
         password: 'birds',
         salt: 'milksteak',
