@@ -1,6 +1,6 @@
-const db = require('./server/db/db');
-const User = require('./server/db/models/user');
-const Product = require('./server/db/models/product');
+const db = require('../server/db/db');
+const User = require('../server/db/models/user');
+const Product = require('../server/db/models/product');
 const Faker = require('faker');
 
 function users() {
