@@ -4,5 +4,9 @@
 	"extends": "airbnb",
 	"rules": {
 		"new-cap": [1, { "capIsNewExceptions": ["Router"] }]
-	}
+	},
+	"env": {
+    "browser": true,
+    "node": true
+  }
 }

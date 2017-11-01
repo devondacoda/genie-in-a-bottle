@@ -4,7 +4,7 @@ const { resolve } = require('path');
 const isDev = process.env.NODE_ENV === 'development';
 
 module.exports = {
-  entry: './client/index.js',
+  entry: './client/index.jsx',
   output: {
     path: __dirname,
     filename: './public/bundle.js',
@@ -20,6 +20,7 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
       },
+      { test: /\.css$/, loader: 'style-loader!css-loader'},
       {
         test: /\.scss$/,
         use: [
