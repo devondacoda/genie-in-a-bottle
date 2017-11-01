@@ -23,15 +23,15 @@ describe('CreditCard model', () => {
           testCC = CC;
         }));
 
-      it('returns true if number is correct', () => {
+      it('returns number', () => {
         expect(testCC.number).to.be.equal('4444333322221111');
       });
 
-      it('returns true if name is correct', () => {
+      it('returns name', () => {
         expect(testCC.name).to.be.equal('Brian');
       });
 
-      it('returns true if expYear is correct', () => {
+      it('returns expYear', () => {
         expect(testCC.expYear).to.be.equal(2017);
       });
     });
