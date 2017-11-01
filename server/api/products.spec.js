@@ -8,23 +8,24 @@ const app = require('../index');
 const Product = db.model('product');
 
 describe('Product routes', () => {
-  beforeEach(() => db.sync({ force: true }));
+  beforeEach(() => db.sync({ force: true })
+    .then(() => {
+      Product.bulkCreate([{
+        name: 'empty bottle',
+        description: 'empty bottle',
+        price: 24.54,
+        inventory: 1,
+        category: 'stuff',
+      }, {
+        name: 'full bottle',
+        description: 'full bottle',
+        price: 100,
+        inventory: 10,
+        category: 'more stuff',
+      }]);
+    }));
 
   describe('/api/products/', () => {
-    beforeEach(() => Product.bulkCreate([{
-      name: 'empty bottle',
-      description: 'empty bottle',
-      price: 24.54,
-      inventory: 1,
-      category: 'stuff',
-    }, {
-      name: 'full bottle',
-      description: 'full bottle',
-      price: 100,
-      inventory: 10,
-      category: 'more stuff',
-    }]));
-
     it('GET /api/products', () => request(app)
       .get('/api/products')
       .expect(200)
@@ -36,4 +37,6 @@ describe('Product routes', () => {
         expect(res.body[0].price).to.be.equal('$24.54');
       }));
   });
+
+  describe('/api/')
 });
