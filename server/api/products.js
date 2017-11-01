@@ -12,5 +12,14 @@ router.route('/')
       .catch(next);
   });
 
+router.route('/:productId')
+  .get((req, res, next) => {
+    Product.findById(Number(req.params.productId))
+      .then((product) => {
+        res.json(product);
+      })
+      .catch(next);
+  });
+
 module.exports = router;
 
