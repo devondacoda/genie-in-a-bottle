@@ -20,7 +20,7 @@ describe('User routes', () => {
 
     it('GET /api/users', () => request(app)
       .get('/api/users')
-      .expect(200)
+      .expect(400)
       .then((res) => {
         expect(res.body).to.be.an('array');
         expect(res.body[0].email).to.be.equal('s@gmail.com');
