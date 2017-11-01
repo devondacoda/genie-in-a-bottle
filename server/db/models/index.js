@@ -2,6 +2,7 @@ const User = require('./user');
 const Address = require('./address');
 const CreditCard = require('./creditCard');
 const Product = require('./product');
+const Order = require('./order');
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -27,4 +28,5 @@ module.exports = {
   Address,
   CreditCard,
   Product,
+  Order,
 };

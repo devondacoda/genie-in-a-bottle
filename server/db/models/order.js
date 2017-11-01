@@ -22,7 +22,7 @@ const Order = db.define('order', {
   time: {
     // getter using js date.now probably -brian
     type: Sequelize.TIME,
-    defaultValue: '420',
+    defaultValue: 'now',
   },
 });
 
