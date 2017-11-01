@@ -1,7 +1,7 @@
 /* global describe beforeEach it */
-
 const { expect } = require('chai');
 const db = require('../index');
+
 const Address = db.model('address');
 
 describe('Address model', () => {
@@ -20,10 +20,9 @@ describe('Address model', () => {
       })
         .then((address) => {
           testAddress = address;
-          console.log('******', address.state);
         }));
 
-      it('returns true if state is correct', () => {
+      it('able to read properties', () => {
         expect(testAddress.state).to.be.equal('NY');
       });
     }); // end describe('correctPassword')
