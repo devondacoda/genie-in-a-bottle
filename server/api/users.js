@@ -10,7 +10,9 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  User.create(req.body)
+  User.findOrCreate({
+    where: req.body,
+  })
     .then(createdUser =>
       res.status(201)
         .json(createdUser))

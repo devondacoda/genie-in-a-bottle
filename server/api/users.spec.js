@@ -42,8 +42,11 @@ describe('User routes', () => {
       })
       .expect(201)
       .then((res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.body.email).to.be.equal('donkeybrains@gmail.com');
+        const createdUser = res.body[0];
+        const wasCreated = res.body[1];
+        expect(createdUser).to.be.an('object');
+        expect(createdUser.email).to.be.equal('donkeybrains@gmail.com');
+        expect(wasCreated).to.be.equal(true);
       }));
   });
 });
