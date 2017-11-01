@@ -22,7 +22,7 @@ describe('User model', () => {
         }));
 
       it('returns true if the name is correct', () => {
-        expect((cody.name).to.be.equal('cody'));
+        expect(cody.name).to.be.equal('cody');
       });
 
       it('returns true if the password is correct', () => {
