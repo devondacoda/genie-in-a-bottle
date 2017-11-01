@@ -11,12 +11,17 @@ describe('User routes', () => {
   beforeEach(() => db.sync({ force: true }));
 
   describe('/api/users/', () => {
-    beforeEach(() => User.create({
+    beforeEach(() => User.bulkCreate([{
       email: 's@gmail.com',
       password: 'fdf',
       salt: '1',
       googleId: 'brian',
-    }));
+    },{
+      email: 'thisisbrian@gmail.com',
+      password: 'thisismypassword',
+      salt: 'andpepper',
+      googleId: 'BRIAN',
+    }]));
 
     it('GET /api/users', () => request(app)
       .get('/api/users')
@@ -24,6 +29,7 @@ describe('User routes', () => {
       .then((res) => {
         expect(res.body).to.be.an('array');
         expect(res.body[0].email).to.be.equal('s@gmail.com');
+        expect(res.body.length).to.be.equal(2);
       }));
   });
 });
