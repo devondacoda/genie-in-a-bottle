@@ -16,7 +16,7 @@ describe('User routes', () => {
       password: 'fdf',
       salt: '1',
       googleId: 'brian',
-    },{
+    }, {
       email: 'thisisbrian@gmail.com',
       password: 'thisismypassword',
       salt: 'andpepper',
@@ -25,7 +25,7 @@ describe('User routes', () => {
 
     it('GET /api/users', () => request(app)
       .get('/api/users')
-      .expect(400)
+      .expect(200)
       .then((res) => {
         expect(res.body).to.be.an('array');
         expect(res.body[0].email).to.be.equal('s@gmail.com');
