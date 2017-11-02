@@ -22,4 +22,16 @@ router.route('/:orderId')
     Order.findById(orderId)
       .then(foundOrder => res.json(foundOrder))
       .catch(next);
+  })
+
+  .put((req, res, next) => {
+    const orderId = req.params.orderId;
+    Order.findOne({
+      where: {
+        id: orderId,
+      },
+    })
+      .then(orderToUpdate => orderToUpdate.update(req.body))
+      .then(updatedOrder => res.json(updatedOrder))
+      .catch(next);
   });
