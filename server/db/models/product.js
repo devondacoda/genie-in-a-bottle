@@ -21,7 +21,7 @@ const Product = db.define('product', {
   },
   picture: {
     type: Sequelize.STRING,
-    defaultValue: 'http://clipart-library.com/image_gallery/123944.png',
+    allowNull: false,
     validate: {
       isUrl: true,
     },

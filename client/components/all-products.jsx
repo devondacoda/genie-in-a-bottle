@@ -15,16 +15,13 @@ function AllProducts(props) {
         </div>
       </div>
       <ul>
-        { props.products.length && props.products.map(product => {
-                return(
-                <li key={product.id}>
-                    <NavLink to={`/product/${product.id}`}>
-                        <img alt="oops!" src={product.picture} height="200" width="300"/>
-                    </NavLink>
-                </li>
-                ) 
-            }
-        )}
+        { props.products.length && props.products.map(product => (
+          <li key={product.id}>
+            <NavLink to={`/product/${product.id}`}>
+              <img alt="oops!" src={product.picture} height="200" width="300" />
+            </NavLink>
+          </li>
+          ))}
       </ul>
     </div>
   );
