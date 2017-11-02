@@ -34,4 +34,19 @@ router.route('/:orderId')
       .then(orderToUpdate => orderToUpdate.update(req.body))
       .then(updatedOrder => res.json(updatedOrder))
       .catch(next);
+  })
+  .delete((req, res, next) => {
+    const orderId = req.params.orderId;
+    let destroyedOrder;
+    Order.findOne({
+      where: {
+        id: orderId,
+      },
+    })
+      .then((orderToDelete) => {
+        destroyedOrder = orderToDelete.id;
+        orderToDelete.destroy();
+      })
+      .then(() => res.send(`Order #${destroyedOrder} is destroyed`))
+      .catch(next);
   });
