@@ -28,6 +28,32 @@ router.route('/:productId')
         res.json(product);
       })
       .catch(next);
+  })
+  .put((req, res, next) => {
+    const productId = req.params.productId;
+    Product.findOne({
+      where: {
+        id: productId,
+      },
+    })
+      .then(productToUpdate => productToUpdate.update(req.body))
+      .then(updatedProduct => res.json(updatedProduct))
+      .catch(next);
+  })
+  .delete((req, res, next) => {
+    const productId = req.params.productId;
+    let destroyedProduct;
+    Product.findOne({
+      where: {
+        id: productId,
+      },
+    })
+      .then((productToDelete) => {
+        destroyedProduct = productToDelete.name;
+        productToDelete.destroy();
+      })
+      .then(() => res.send(`${destroyedProduct} is destroyed`))
+      .catch(next);
   });
 
 module.exports = router;
