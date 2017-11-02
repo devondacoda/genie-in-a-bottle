@@ -16,3 +16,10 @@ router.route('/')
       .catch(next);
   });
 
+router.route('/:orderId')
+  .get((req, res, next) => {
+    const orderId = req.params.orderId;
+    Order.findById(orderId)
+      .then(foundOrder => res.json(foundOrder))
+      .catch(next);
+  });
