@@ -18,9 +18,14 @@ const Order = require('./order');
  * instead of: const User = require('../db/models/user')
  */
 
-User.hasMany(Address);
+
 User.hasMany(CreditCard);
-// Address.belongsToMany(User);
+
+Address.belongsToMany(User, { through: 'billingAddress' });
+Address.belongsToMany(User, { through: 'shippingAddress' });
+
+
+
 CreditCard.belongsTo(User);
 
 module.exports = {
