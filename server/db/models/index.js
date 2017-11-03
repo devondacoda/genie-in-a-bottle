@@ -25,6 +25,7 @@ User.hasMany(Address);
 Order.belongsTo(Address, { as: 'billingAddress' });
 Order.belongsTo(Address, { as: 'shippingAddress' });
 Product.belongsToMany(Order, { through: 'orderItemList' });
+Order.belongsToMany(Product, { through: 'orderItemLIst' });
 
 Order.belongsTo(User);
 
