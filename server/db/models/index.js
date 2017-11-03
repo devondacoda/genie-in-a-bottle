@@ -20,11 +20,13 @@ const Order = require('./order');
 
 
 User.hasMany(CreditCard);
+User.hasMany(Address);
 
-Address.belongsToMany(User, { through: 'billingAddress' });
-Address.belongsToMany(User, { through: 'shippingAddress' });
+Order.belongsTo(Address, { as: 'billingAddress' });
+Order.belongsTo(Address, { as: 'shippingAddress' });
+Product.belongsToMany(Order, { through: 'orderItemList' });
 
-
+Order.belongsTo(User);
 
 CreditCard.belongsTo(User);
 
