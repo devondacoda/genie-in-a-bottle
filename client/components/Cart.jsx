@@ -5,7 +5,7 @@ import CartItem from './CartItem';
 
 export default class Cart extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       cart: {
         isCart: true,
@@ -16,32 +16,38 @@ export default class Cart extends Component {
             description: 'test description....',
             price: '$1000',
           },
-          // {
-          //   name: 'test2',
-          //   description: 'test description 2....',
-          //   price: '$2000',
-          // }
-        ]
-      }
-    }
+          {
+            name: 'test2',
+            description: 'test description 2....',
+            price: '$2000',
+          },
+        ],
+      },
+    };
   }
 
   render() {
     return (
       <div>
         <div className="py-5">
-        <h1 className="text-center">Your Cart</h1>
+          <h1 className="text-center">Your Cart</h1>
         </div>
-        <CartItem products={this.state.cart.products} />
+        {
+          this.state.cart.products.map(product => (
+            <CartItem key={product.name} product={product} />
+          ))
+        }
         <div className="py-5 mx-auto w-50">
-          <a className="btn btn-primary w-100" href="">CHECKOUT</a>
+          <NavLink to="/checkout-success" className="btn btn-primary w-100">
+            CHECKOUT
+          </NavLink>
         </div>
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => ({ order: state.order }) // need to create
+const mapStateToProps = state => ({ order: state.order }); // need to create
 // const mapDispatchToProps = (dispatch) => {
 //   return {
 //     handleSubmit(A BUNCH OF PARAMS TO UPDATE ORDER) {
@@ -51,4 +57,4 @@ const mapStateToProps = state => ({ order: state.order }) // need to create
 //   }
 // }
 
-// PUT - edit quantity, delete item, flip cart to order, billing, shipping 
+// PUT - edit quantity, delete item, flip cart to order, billing, shipping
