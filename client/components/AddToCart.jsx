@@ -7,8 +7,8 @@ export default class AddToCart extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(e) {
-    console.log('Spanish Inquisition', this.props.quantity)
+  handleClick(evt) {
+    
   }
 
   render() {
@@ -21,3 +21,11 @@ export default class AddToCart extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  addProduct() {
+
+  },
+});
+
+connect(null, mapDispatchToProps)(AddToCart);
