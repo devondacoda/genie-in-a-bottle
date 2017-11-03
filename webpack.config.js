@@ -1,9 +1,21 @@
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 const { resolve } = require('path');
+const webpack = require('webpack');
 
 const isDev = process.env.NODE_ENV === 'development';
 
 module.exports = {
+  plugins: [
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        Popper: ['popper.js', 'default'],
+        // In case you imported plugins individually, you must also require them here:
+        Util: "exports-loader?Util!bootstrap/js/dist/util",
+        Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown",
+      })
+  ],
   entry: './client/index.jsx',
   output: {
     path: __dirname,
