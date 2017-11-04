@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../db/models/user');
+const Order = require('../db/models/order');
 
 module.exports = router;
 
@@ -11,7 +12,10 @@ router.post('/login', (req, res, next) => {
       } else if (!user.correctPassword(req.body.password)) {
         res.status(401).send('Incorrect password');
       } else {
-        req.login(user, err => (err ? next(err) : res.json(user)));
+        // console.log(req.session,'~~~SESSiON')
+        req.login(user, err => (err ? next(err) : Order.findOrCreateCart(user.id))
+          .then(foundCart => res.json(foundCart)));
+        // console.log(req.user,'~~~~~USER~~~~')
       }
     })
     .catch(next);
