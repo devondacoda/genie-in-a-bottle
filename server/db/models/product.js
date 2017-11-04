@@ -48,7 +48,7 @@ Product.addToCart = function (UserId) {
     },
   })
     .then(foundCart => {
-      foundCart.addProducts(2)
+      foundCart.addProducts(3)
     })
 };
 
