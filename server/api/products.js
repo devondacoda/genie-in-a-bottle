@@ -61,7 +61,7 @@ router.route('/:productId')
 
   router.put('/:productId/add', (req, res, next) => {
     const productId = req.params.productId;
-
+    Product.addToCart(productId)
   })
 
 module.exports = router;

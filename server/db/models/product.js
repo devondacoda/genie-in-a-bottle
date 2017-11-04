@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
+const Order = require('../models/order');
 
 const Product = db.define('product', {
   name: {
@@ -38,5 +39,17 @@ const Product = db.define('product', {
     type: Sequelize.STRING,
   },
 });
+
+Product.addToCart = function (UserId) {
+  Order.findOne({
+    where: {
+      userId: UserId,
+      isCart: true,
+    },
+  })
+    .then(foundCart => {
+      foundCart.addProducts(2)
+    })
+};
 
 module.exports = Product;
