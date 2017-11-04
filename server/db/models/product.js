@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
+const Order = require('../models/order');
+const OrderItemList = require('../models/orderItemList');
+
 
 const Product = db.define('product', {
   name: {
@@ -39,4 +42,26 @@ const Product = db.define('product', {
   },
 });
 
+Product.addToCart = function (productId, userId, quantity) {
+  Order.findOne({
+    where: {
+      userId,
+      isCart: true,
+    },
+  })
+    .then(foundCart => {
+      return OrderItemList.findOrCreate({
+        where: {
+          orderId: foundCart.id,
+          productId,
+        }
+      })     
+    })
+    .then(foundOrderItemList => {
+      foundOrderItemList[0].update({quantity})
+    })
+};
+
 module.exports = Product;
+
+// foundCart.addProduct(productId)

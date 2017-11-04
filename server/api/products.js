@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Product } = require('../db/models');
+const { Order } = require('../db/models');
 
 // router.route let's us chain multiple VERB requests off of the same path
 // Helps keep code DRY
@@ -55,6 +56,16 @@ router.route('/:productId')
       .then(() => res.send(`${destroyedProduct} is destroyed`))
       .catch(next);
   });
+
+  // Adding product to cart
+
+  router.put('/:productId/add', (req, res, next) => {
+    const productId = Number(req.params.productId);
+    const userId = Number(req.session.passport.user);
+    const { quantity } = req.body;
+    Product.addToCart(productId, userId, quantity)
+      res.send('stop hanging')
+  })
 
 module.exports = router;
 
