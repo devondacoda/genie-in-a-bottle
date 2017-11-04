@@ -12,7 +12,7 @@ function users() {
       email: Faker.internet.email(),
       googleId: Faker.internet.userName(),
       salt: Faker.image.avatar(),
-      password: Faker.lorem.word(1),
+      password: '1',
     }));
   }
   return x;
