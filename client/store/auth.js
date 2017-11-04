@@ -21,14 +21,14 @@ export default function reducer (state = {}, action) {
   }
 }
 
-export const authenticate = (email, password, formName) => (dispatch) => {
+export const authenticate = (userName, email, password, formName) => (dispatch) => {
   if (formName === 'login') {
     axios.post('/auth/login', { email, password })
       .then(user => dispatch(logIn(user.data)))
       .then(() => history.push('/'))
       .catch(console.error);
   } else {
-    axios.post('/auth/signup', { email, password })
+    axios.post('/auth/signup', { userName, email, password })
       .then(user => dispatch(signUp(user.data)))
       .then(() => history.push('/'))
       .catch(console.error);

@@ -24,9 +24,9 @@ function NavBar(props) {
                 </NavLink>
               </li>}
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <NavLink className="nav-link" to="/cart">
                 Cart
-              </a>
+              </NavLink>
             </li>
           </ul>
           {isLoggedIn 

@@ -10,14 +10,10 @@ import { AllProducts } from './index';
  */
 export class UserHome extends Component {
   render() {
-    const { isLoggedIn } = this.props;
+
+    const { isLoggedIn, user } = this.props;
     return (
       <div>
-        {
-          this.props.email
-          ? <div className="text-center"> Hey, {this.props.email}</div>
-          : <div className="text-center"> Welcome, Guest </div>
-        }
         <div className="py-1 bg-dark">
           <div className="container">
             <div className="row">
@@ -34,6 +30,11 @@ export class UserHome extends Component {
             </div>
           </div>
         </div>
+        {
+          user.email
+          ? <div className="text-center"> Hey, {user.name}</div>
+          : <h3 className="text-center"> Welcome, Guest </h3>
+        }
         <AllProducts />
       </div>
     );
@@ -45,7 +46,7 @@ export class UserHome extends Component {
  * CONTAINER
  */
 const mapState = state => ({
-  email: state.user.email,
+  user: state.user,
 });
 
 export default connect(mapState)(UserHome);
