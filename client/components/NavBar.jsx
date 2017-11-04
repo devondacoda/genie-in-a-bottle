@@ -3,6 +3,7 @@ import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout } from '../store'; 
+import { SearchBar } from '../components';
 
 
 function NavBar(props) {
@@ -13,12 +14,15 @@ function NavBar(props) {
         <NavLink className="navbar-brand" to="/">
           <b className="">Genie in a Bottle</b>
         </NavLink>
+        <SearchBar />
         <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon" />{" "}
+          <span className="navbar-toggler-icon" />{""}
         </button>
         <div className="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
           <ul className="navbar-nav">
-            {isLoggedIn ? <div /> : <li className="nav-item">
+            {isLoggedIn 
+              ? <div /> 
+              : <li className="nav-item">
                 <NavLink className="nav-link" to="/signup">
                   Sign Up
                 </NavLink>

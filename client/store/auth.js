@@ -21,7 +21,7 @@ export default function reducer (state = {}, action) {
   }
 }
 
-export const authenticate = (userName, email, password, formName) => (dispatch) => {
+export const authenticate = (email, password, formName, userName) => (dispatch) => {
   if (formName === 'login') {
     axios.post('/auth/login', { email, password })
       .then(user => dispatch(logIn(user.data)))

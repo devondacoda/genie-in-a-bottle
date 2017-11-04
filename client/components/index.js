@@ -5,6 +5,7 @@
  */
 export { default as Main } from './main';
 export { default as NavBar } from './NavBar';
+export { default as SearchBar } from './SearchBar';
 export { default as UserHome } from './user-home';
 export { default as AllProducts } from './AllProducts';
 export { default as SingleProduct } from './SingleProduct';
