@@ -60,9 +60,11 @@ router.route('/:productId')
   // Adding product to cart
 
   router.put('/:productId/add', (req, res, next) => {
-    const productId = req.params.productId;
-    console.log(req.user)
-    Product.addToCart(productId)
+    const productId = Number(req.params.productId);
+    const userId = Number(req.session.passport.user);
+    const { quantity } = req.body;
+    Product.addToCart(productId, userId, quantity)
+      res.send('stop hanging')
   })
 
 module.exports = router;

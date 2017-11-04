@@ -3,6 +3,7 @@ const Address = require('./address');
 const CreditCard = require('./creditCard');
 const Product = require('./product');
 const Order = require('./order');
+const OrderItemList = require('./orderItemList');
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -24,7 +25,7 @@ User.hasMany(Address);
 
 Order.belongsTo(Address, { as: 'billingAddress' });
 Order.belongsTo(Address, { as: 'shippingAddress' });
-Order.belongsToMany(Product, { through: 'orderItemLIst' });
+Order.belongsToMany(Product, { through: 'orderItemLists' });
 
 Order.belongsTo(User);
 
@@ -36,4 +37,5 @@ module.exports = {
   CreditCard,
   Product,
   Order,
+  OrderItemList,
 };
