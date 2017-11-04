@@ -16,7 +16,6 @@ const Main = (props) => {
   return (
     <div>
       <NavBar isLoggedIn={isLoggedIn}/>
-      <hr />
       {children}
     </div>
   );

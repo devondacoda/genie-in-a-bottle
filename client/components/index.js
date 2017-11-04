@@ -6,7 +6,7 @@
 export { default as Main } from './main';
 export { default as NavBar } from './NavBar';
 export { default as UserHome } from './user-home';
-export { default as AllProducts } from './all-products';
+export { default as AllProducts } from './AllProducts';
 export { default as SingleProduct } from './SingleProduct';
 export { default as Cart } from './Cart';
 export { default as CheckoutSuccess } from './CheckoutSuccess';

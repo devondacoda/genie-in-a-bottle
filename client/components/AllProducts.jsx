@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 function AllProducts(props) {
   return (
     <div>
-      <div className="my-4">
+      <div className="my-4 ">
         <div className="container">
           <div className="row">
             <div className="col-md-12">
@@ -14,15 +14,18 @@ function AllProducts(props) {
           </div>
         </div>
       </div>
-      <ul>
-        { props.products.length && props.products.map(product => (
-          <li key={product.id}>
-            <NavLink to={`/product/${product.id}`}>
-              <img alt="oops!" src={product.picture} height="200" width="300" />
-            </NavLink>
-          </li>
-          ))}
-      </ul>
+      <div className="container my-3 product-list col-md-10">
+        <ul className="row">
+          { props.products.length && props.products.map(product => (
+            <li className="col-md-3 product" key={product.id}>
+              <NavLink to={`/product/${product.id}`}>
+                <img alt="img not available" className="product-pic" src={product.picture}/>
+                <h4>{product.name}</h4>
+              </NavLink>
+            </li>
+            ))}
+        </ul>
+      </div>
     </div>
   );
 }
