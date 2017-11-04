@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { logout } from '../store'; 
 import { NavBar } from '../components';
 
 /**
@@ -16,7 +15,7 @@ const Main = (props) => {
 
   return (
     <div>
-            <NavBar isLoggedIn={isLoggedIn}/>
+      <NavBar isLoggedIn={isLoggedIn}/>
       <hr />
       {children}
     </div>

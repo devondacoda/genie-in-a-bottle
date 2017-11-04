@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { logout } from '../store'; 
 
 
 function NavBar(props) {
   const { handleClick, isLoggedIn } = props;
-  return <nav className="navbar navbar-expand-md bg-primary navbar-dark">
+  return (
+    <nav className="navbar navbar-expand-md bg-primary navbar-dark">
       <div className="container">
         <NavLink className="navbar-brand" to="/">
           <b className="">Genie in a Bottle</b>
@@ -27,14 +29,19 @@ function NavBar(props) {
               </a>
             </li>
           </ul>
-          {isLoggedIn ? <NavLink to="/home" className="btn navbar-btn ml-2 text-white btn-secondary">
-              <i className="fa d-inline fa-lg fa-user-circle-o" /> Sign Out
-            </NavLink> : <NavLink to="/login" className="btn navbar-btn ml-2 text-white btn-secondary">
+          {isLoggedIn 
+            ? <NavLink to="/" 
+              className="btn navbar-btn ml-2 text-white btn-secondary"
+              onClick={handleClick}>
+              <i className="fa d-inline fa-lg fa-user-circle-o"/> Sign Out
+            </NavLink> 
+            : <NavLink to="/login" className="btn navbar-btn ml-2 text-white btn-secondary">
               <i className="fa d-inline fa-lg fa-user-circle-o" /> Sign in
             </NavLink>}
         </div>
       </div>
-    </nav>;
+    </nav>
+  );
 }
 
 
