@@ -57,15 +57,13 @@ router.route('/:productId')
 
 // Adding product to cart
 
-router.put('/:productId/add', (req, res, next) => {
-  const productId = Number(req.params.productId);
-  const userId = Number(req.session.passport.user);
-  const { quantity } = req.body;
-  Product.addToCart(productId, userId, quantity)
-    .then(() => {
-      res.status(201).json(`Product ${productId} added to you cart!`);
-    });
-});
+  router.put('/:productId/add', (req, res, next) => {
+    const productId = Number(req.params.productId);
+    const userId = Number(req.session.passport.user);
+    const { quantity } = req.body;
+    Product.addToCart(productId, userId, quantity)
+      .then((addedItem) => res.status(201).json(addedItem))
+  })
 
 module.exports = router;
 
