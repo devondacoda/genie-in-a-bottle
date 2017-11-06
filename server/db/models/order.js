@@ -22,12 +22,7 @@ const Order = db.define('order', {
 });
 
 Order.findOrCreateCart = function (UserId) {
-  return Order.findOrCreate({
-    where: {
-      userId: UserId,
-      isCart: true,
-    },
-  });
+  return Order.findCreateFind({ where: { userId: UserId, isCart: true } });
 };
 
 
