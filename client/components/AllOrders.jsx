@@ -1,14 +1,25 @@
 import { connect } from 'react-redux';
-import React from 'react';
+import React, { Component } from 'react';
+import { fetchOrders } from '../store/orders';
 
 
-function AllOrders(props) {
-  const { orders } = props;
-  console.log('YOOOOOOOOO',props)
-  return (
-    <div>
-      <h3>Loaderino?</h3>
-      {/* {orders.map(order =>
+class AllOrders extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillMount() {
+    const { userId } = this.props;
+    this.props.fetchOrders(userId)
+  }
+
+  render() {
+    const { orders } = this.props;
+    console.log('YOOOOOOOOO', this.props);
+    return (
+      <div>
+        <h3>Loaderino?</h3>
+        {/* {orders.map(order =>
         (
           <li key={order.id}>
             <h3>{order.status}</h3>
@@ -16,10 +27,11 @@ function AllOrders(props) {
             <h4>{order.time}</h4>
           </li>
         ))} */}
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => ({ orders: state.orders });
-
-export default connect(mapStateToProps)(AllOrders);
+const mapDispatch = { fetchOrders };
+export default connect(mapStateToProps, mapDispatch)(AllOrders);

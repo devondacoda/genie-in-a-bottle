@@ -6,8 +6,12 @@ import axios from 'axios';
 // Action Types
 const GET_ORDERS = 'GET_ORDERS';
 
+// initial state
+
+const defaultOrders = [];
+
 // Action Creators
-const getOrders = orders => ({ type: GET_ORDER, orders });
+const getOrders = orders => ({ type: GET_ORDERS, orders });
 
 // Thunks
 export const fetchOrders = userId =>
@@ -17,9 +21,6 @@ export const fetchOrders = userId =>
         dispatch(getOrders(res.data)))
       .catch(err => console.log(err));
 
-// initial state
-
-const defaultOrders = [];
 
 // Reducer
 
