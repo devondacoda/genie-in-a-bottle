@@ -47,15 +47,15 @@ Product.addToCart = function (productId, userId, quantity) {
     },
   })
     .then(foundCart => {
-      return OrderItemList.findOrCreate({
+      return OrderItemList.findCreateFind({
         where: {
           orderId: foundCart.id,
-          productId,
+          productId
         }
-      })     
+      });     
     })
     .then(foundOrderItemList => {
-      foundOrderItemList[0].update({
+      return foundOrderItemList[0].update({
           quantity: foundOrderItemList[0].quantity + Number(quantity)
         });
     })

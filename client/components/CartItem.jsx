@@ -6,11 +6,11 @@ export default function CartItem(props) {
     <div className="py-5">
     <div className="row">
       <div className="col-md-4 h-25">
-        <img className="img-fluid d-block h-100 w-100" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg"/> </div>
+        <img className="img-fluid d-block h-100 w-100" src={product.picture} /> </div>
       <div className="col-md-6 h-25">
-        <p className="lead w-75 product-name">{product.name}</p>
-        <p className="lead w-25 product-price">{product.price}</p>
-        <p className="lead w-75 product-desc">{product.description}</p>
+        <p className="lead w-75 product-name">Name: {product.name}</p>
+        <p className="lead w-25 product-price">Price: $ {product.price}</p>
+        <p className="lead w-75 product-desc">Description: {product.description}</p>
       </div>
       <div className="col-md-2">
         <div className="py-3">

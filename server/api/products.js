@@ -11,9 +11,7 @@ router.route('/')
       .catch(next);
   })
   .post((req, res, next) => {
-    Product.findOrCreate({
-      where: req.body,
-    })
+    Product.findCreateFind({ where: req.body })
       .then((createdProduct) => {
         res.status(201).json(createdProduct);
       })
@@ -55,16 +53,14 @@ router.route('/:productId')
       .catch(next);
   });
 
-  // Adding product to cart
+// Adding product to cart
 
   router.put('/:productId/add', (req, res, next) => {
     const productId = Number(req.params.productId);
     const userId = Number(req.session.passport.user);
     const { quantity } = req.body;
     Product.addToCart(productId, userId, quantity)
-      .then(() => {
-        res.status(201).json(`Product ${productId} added to you cart!`)
-      })
+      .then((addedItem) => res.status(201).json(addedItem))
   })
 
 module.exports = router;
