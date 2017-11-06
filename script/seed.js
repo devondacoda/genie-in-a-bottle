@@ -30,7 +30,7 @@ function createUsers() {
 function product() {
   Faker.seed(123);
   const products = [];
-  for (let i = 1; i < 16; i++) {
+  for (let i = 1; i < 15; i++) {
     products.push(Product.build({
       name: Faker.commerce.productName(),
       price: Faker.commerce.price(),
@@ -47,7 +47,9 @@ function createProducts() {
 }
 
 db
-  .sync({ force: true })
+  .sync({ force: false })
+  .then(() => Promise.all(createUsers()))
+  .then(() => Promise.all(createProducts()))
   .then(() => {
     User.hasMany(CreditCard);
     User.hasMany(Address);
@@ -60,8 +62,6 @@ db
 
     CreditCard.belongsTo(User);
   })
-  .then(() => Promise.all(createUsers()))
-  .then(() => Promise.all(createProducts()))
   .then(
     () => {
       console.log('Seeding successful');
