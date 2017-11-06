@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Order } = require('../db/models');
+const { Order, OrderItemList } = require('../db/models');
 
 module.exports = router;
 
@@ -14,7 +14,22 @@ router.route('/')
     Order.create(req.body).then(createdOrder =>
       res.send(`Order #${createdOrder.id} was created `))
       .catch(next);
-  });
+    });
+
+// Route for getting current cart
+router.get('/cart', (req, res, next) => {
+  const userId = Number(req.session.passport.user);
+  Order.findOne({
+    where: { userId, isCart: true }
+  }).then(foundCart => {
+    return OrderItemList.findAll({
+      where: { orderId: foundCart.id },
+      include: [{all: true}]
+    })
+  }).then(arrOfItems => {
+    res.status(200).json(arrOfItems);
+  })
+})
 
 router.route('/:orderId')
   .get((req, res, next) => {
@@ -50,3 +65,4 @@ router.route('/:orderId')
       .then(() => res.send(`Order #${destroyedOrder} is destroyed`))
       .catch(next);
   });
+

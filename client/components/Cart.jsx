@@ -2,38 +2,29 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import CartItem from './CartItem';
+import store, { getCurrentCart } from '../store';
 
-export default class Cart extends Component {
+class Cart extends Component {
   constructor() {
     super();
     this.state = {
-      cart: {
-        isCart: true,
-        status: 'Pending',
-        products: [
-          {
-            name: 'test',
-            description: 'test description....',
-            price: '$1000',
-          },
-          {
-            name: 'test2',
-            description: 'test description 2....',
-            price: '$2000',
-          },
-        ],
-      },
+      cart: [],
     };
   }
 
+  componentDidMount() {
+    store.dispatch(getCurrentCart());
+  }
+  
   render() {
+    console.log('CARRRT', this.state)
     return (
       <div>
         <div className="py-5">
           <h1 className="text-center">Your Cart</h1>
         </div>
         {
-          this.state.cart.products.map(product => (
+          this.state.cart.map(product => (
             <CartItem key={product.name} product={product} />
           ))
         }
@@ -47,14 +38,19 @@ export default class Cart extends Component {
   }
 }
 
-const mapStateToProps = state => ({ order: state.order }); // need to create
-// const mapDispatchToProps = (dispatch) => {
-//   return {
+const mapStateToProps = state => ({
+  cart: state.order.currentOrderList
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
 //     handleSubmit(A BUNCH OF PARAMS TO UPDATE ORDER) {
 //       event.preventDefault()
 //       dispatch(SUBMIT ORDER THUNK({PROBALY THE PARAMS AS THIS OBJ}))
 //     }
-//   }
-// }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
 
 // PUT - edit quantity, delete item, flip cart to order, billing, shipping
