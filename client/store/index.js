@@ -21,6 +21,5 @@ export default store;
 export * from './user';
 export * from './products';
 export * from './order';
-export * from './orders';
 export * from './auth';
 
