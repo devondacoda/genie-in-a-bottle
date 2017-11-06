@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { logout } from '../store'; 
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logout } from '../store';
 import { SearchBar } from '../components';
 
 
@@ -16,12 +16,16 @@ function NavBar(props) {
         </NavLink>
         <SearchBar />
         <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon" />{""}
+          <span className="navbar-toggler-icon" />{''}
         </button>
         <div className="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
           <ul className="navbar-nav">
-            {isLoggedIn 
-              ? <div /> 
+            {isLoggedIn
+              ? <li className="nav-item">
+                <NavLink className="nav-link" to="/profile">
+                    Profile
+                </NavLink>
+              </li>
               : <li className="nav-item">
                 <NavLink className="nav-link" to="/signup">
                   Sign Up
@@ -33,15 +37,17 @@ function NavBar(props) {
               </NavLink>
             </li>
           </ul>
-          {isLoggedIn 
-            ? <NavLink to="/" 
+          {isLoggedIn
+            ? <NavLink
+              to="/"
               className="btn navbar-btn ml-2 text-white btn-secondary"
-              onClick={handleClick}>
-              <i className="fa d-inline fa-lg fa-user-circle-o"/> Sign Out
-            </NavLink> 
+              onClick={handleClick}
+            >
+              <i className="fa d-inline fa-lg fa-user-circle-o" /> Sign Out
+              </NavLink>
             : <NavLink to="/login" className="btn navbar-btn ml-2 text-white btn-secondary">
               <i className="fa d-inline fa-lg fa-user-circle-o" /> Sign in
-            </NavLink>}
+              </NavLink>}
         </div>
       </div>
     </nav>
@@ -52,15 +58,15 @@ function NavBar(props) {
 /**
  * CONTAINER
  */
-const mapState = (state) => ({
-    isLoggedIn: !!state.user.id
-  });
+const mapState = state => ({
+  isLoggedIn: !!state.user.id,
+});
 
-const mapDispatch = (dispatch) => ({
-    handleClick () {
-      dispatch(logout());
-    }
-  });
+const mapDispatch = dispatch => ({
+  handleClick() {
+    dispatch(logout());
+  },
+});
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes

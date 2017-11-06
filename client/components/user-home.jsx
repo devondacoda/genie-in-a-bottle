@@ -10,7 +10,6 @@ import { AllProducts } from './index';
  */
 export class UserHome extends Component {
   render() {
-
     const { isLoggedIn, user } = this.props;
     return (
       <div>
@@ -32,7 +31,7 @@ export class UserHome extends Component {
         </div>
         {
           user.email
-          ? <div className="text-center"> Hey, {user.name}</div>
+          ? <div className="text-center"><h3>Hey, {user.name}</h3></div>
           : <h3 className="text-center"> Welcome, Guest </h3>
         }
         <AllProducts />
