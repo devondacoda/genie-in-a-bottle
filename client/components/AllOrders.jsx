@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { fetchOrders } from '../store/orders';
+import { fetchOrders } from '../store';
 
 
 class AllOrders extends Component {
