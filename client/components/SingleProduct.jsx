@@ -37,7 +37,7 @@ class getSingleProduct extends Component {
             ))}
           </select>
         </form>
-        <AddToCart quantity={this.state.quantity} stock={singleProduct.length && singleProduct[0].inventory} />
+        <AddToCart itemId={productId} quantity={this.state.quantity} stock={singleProduct.length && singleProduct[0].inventory} />
       </div>
     );
   }

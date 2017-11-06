@@ -1,31 +1,29 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
+import { addProduct } from '../store';
 
-export default class AddToCart extends Component {
+class AddToCart extends Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
   }
-
-  handleClick(evt) {
-    
-  }
-
+  
+  
   render() {
     return (
       <div>
         {
-          this.props.stock ? <button onClick={this.handleClick}>Add To Carto</button> : <button disabled="true">Out of Stock</button>
+          this.props.stock ? <button onClick={this.props.addProduct}>Add To Cart</button> : <button disabled="true">Out of Stock</button>
         }
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   addProduct() {
-
+    const { itemId, quantity } = ownProps;
+    dispatch(addProduct(itemId, quantity))
   },
 });
 
-connect(null, mapDispatchToProps)(AddToCart);
+export default connect(null, mapDispatchToProps)(AddToCart);
