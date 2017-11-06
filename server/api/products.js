@@ -7,9 +7,7 @@ const { Order } = require('../db/models');
 router.route('/')
   .get((req, res, next) => {
     Product.findAll()
-      .then((allProducts) => {
-        res.json(allProducts);
-      })
+      .then(allProducts => res.json(allProducts))
       .catch(next);
   })
   .post((req, res, next) => {

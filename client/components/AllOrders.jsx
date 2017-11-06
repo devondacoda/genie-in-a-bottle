@@ -2,8 +2,9 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 
-export default function AllOrders(props) {
+function AllOrders(props) {
   const { orders } = props;
+  console.log('YOOOOOOOOO',props)
   return (
     <div>
       <h3>Loaderino?</h3>
@@ -19,6 +20,6 @@ export default function AllOrders(props) {
   );
 }
 
-// const mapStateToProps = state => ({ orders: state.orders });
+const mapStateToProps = state => ({ orders: state.orders });
 
-// export default connect(mapStateToProps)(AllOrders);
+export default connect(mapStateToProps)(AllOrders);
