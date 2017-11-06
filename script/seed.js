@@ -51,8 +51,16 @@ db
   .sync({ force: true })
   .then(() => Promise.all(createUsers()))
   .then(() => Promise.all(createProducts()))
-  .then(() => {
-    console.log("Seeding successful");
+  .then(
+    function() {
+      console.log("Seeding successful");
+    },
+    function(err) {
+      console.error("Error while seeding");
+      console.error(err.stack);
+    }
+  )
+  .finally(function() {
     db.close();
     return null;
   });
