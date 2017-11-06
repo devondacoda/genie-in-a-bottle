@@ -25,9 +25,6 @@ const Product = db.define('product', {
   picture: {
     type: Sequelize.STRING,
     allowNull: false,
-    validate: {
-      isUrl: true,
-    },
   },
   inventory: {
     type: Sequelize.INTEGER,
