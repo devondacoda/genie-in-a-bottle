@@ -65,7 +65,7 @@ router.route('/:productId')
     const { quantity } = req.body;
     Product.addToCart(productId, userId, quantity)
       .then(() => {
-        res.send(`Product ${productId} added to you cart!`)
+        res.status(201).json(`Product ${productId} added to you cart!`)
       })
   })
 
