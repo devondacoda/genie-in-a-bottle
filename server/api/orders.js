@@ -20,21 +20,28 @@ router.route('/')
 router.get('/cart', (req, res, next) => {
   const userId = Number(req.session.passport.user);
   Order.findOne({
-    where: { userId, isCart: true }
-  }).then(foundCart => {
-    return OrderItemList.findAll({
-      where: { orderId: foundCart.id },
-      include: [{all: true}]
-    })
-  }).then(arrOfItems => {
-    res.status(200).json(arrOfItems);
+    where: { userId, isCart: true },
+    include: [{ all: true, nested: true }] // Eager loading not working here? But works in route('/:orderId')
   })
+  .then(order => {
+    res.json(order.products);
+  })
+  // .then(foundCart => {
+  //   return OrderItemList.findAll({
+  //     where: { orderId: foundCart.id }
+  //   })
+  // }).then(arrOfItems => {
+  //   res.status(200).json(arrOfItems);
+  // })
 })
 
 router.route('/:orderId')
   .get((req, res, next) => {
     const orderId = req.params.orderId;
-    Order.findById(orderId)
+    Order.findOne({
+      where: {id: orderId},
+      include: [{ all: true, nested: true }]
+    })
       .then(foundOrder => res.json(foundOrder))
       .catch(next);
   })

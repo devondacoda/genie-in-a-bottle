@@ -7,12 +7,12 @@ const GET_CART = 'GET_CART';
 const ADD_CART_ITEM = 'ADD_CART_ITEM';
 
 // Action Creators
-const getCart = (items) => ({ type: GET_CART, items });
 const addToCart = item => ({ type: ADD_CART_ITEM, item });
+const getCart = (items) => ({ type: GET_CART, items });
 
 // initial state
 const defaultOrder = {
-  currentOrderList: [],
+  cart: [],
   pastOrders: [],
 } 
 
@@ -20,10 +20,11 @@ const defaultOrder = {
 export default function(state=defaultOrder, action) {
   switch(action.type) {
     case ADD_CART_ITEM:
-      return action.item
+      return Object.assign({}, state, {cart: [...state.cart, action.item]});
 
     case GET_CART:
-      return Object.assign({}, defaultOrder, {currentOrderList: action.items})
+      return Object.assign({}, state, {cart: action.items});
+    
     default:
       return state
   };
@@ -31,7 +32,12 @@ export default function(state=defaultOrder, action) {
 
 // Thunks
 export const addProduct = (itemId, quantity) => dispatch => {
-  axios.put(`/api/products/${itemId}/add`, { quantity }).then(() => {
+  axios.put(`/api/products/${itemId}/add`, { quantity })
+  .then((res) => {
+    console.log(res.data);
+    dispatch(addToCart(res.data))
+  })
+  .then(() => {
     history.push('/');
   })
 }

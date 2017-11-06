@@ -55,7 +55,7 @@ Product.addToCart = function (productId, userId, quantity) {
       })     
     })
     .then(foundOrderItemList => {
-      foundOrderItemList[0].update({
+      return foundOrderItemList[0].update({
           quantity: foundOrderItemList[0].quantity + Number(quantity)
         });
     })

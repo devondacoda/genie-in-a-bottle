@@ -64,9 +64,7 @@ router.route('/:productId')
     const userId = Number(req.session.passport.user);
     const { quantity } = req.body;
     Product.addToCart(productId, userId, quantity)
-      .then(() => {
-        res.status(201).json(`Product ${productId} added to you cart!`)
-      })
+      .then((addedItem) => res.status(201).json(addedItem))
   })
 
 module.exports = router;

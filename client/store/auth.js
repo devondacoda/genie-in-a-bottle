@@ -1,5 +1,6 @@
 import axios from 'axios';
 import history from '../history'
+import { getCurrentCart } from './order';
 
 const LOG_IN = 'LOG_IN';
 const SIGN_UP = 'SIGN_UP';
@@ -25,6 +26,7 @@ export const authenticate = (email, password, formName, userName) => (dispatch) 
   if (formName === 'login') {
     axios.post('/auth/login', { email, password })
       .then(user => dispatch(logIn(user.data)))
+      .then(() => dispatch(getCurrentCart()))
       .then(() => history.push('/'))
       .catch(console.error);
   } else {

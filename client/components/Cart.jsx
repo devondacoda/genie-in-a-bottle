@@ -5,26 +5,14 @@ import CartItem from './CartItem';
 import store, { getCurrentCart } from '../store';
 
 class Cart extends Component {
-  constructor() {
-    super();
-    this.state = {
-      cart: [],
-    };
-  }
-
-  componentDidMount() {
-    store.dispatch(getCurrentCart());
-  }
-  
   render() {
-    console.log('CARRRT', this.state)
     return (
       <div>
         <div className="py-5">
           <h1 className="text-center">Your Cart</h1>
         </div>
         {
-          this.state.cart.map(product => (
+          this.props && this.props.cart.map(product => (
             <CartItem key={product.name} product={product} />
           ))
         }
@@ -38,9 +26,10 @@ class Cart extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  cart: state.order.currentOrderList
-});
+const mapStateToProps = state => {
+  const { cart } = state.order;
+  return {cart}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
