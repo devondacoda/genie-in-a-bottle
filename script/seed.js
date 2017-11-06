@@ -1,6 +1,9 @@
 const db = require('../server/db/db');
 const User = require('../server/db/models/user');
 const Product = require('../server/db/models/product');
+const Address = require('../server/db/models/address');
+const CreditCard = require('../server/db/models/creditCard');
+const Order = require('../server/db/models/order');
 const Faker = require('faker');
 const Promise = require('bluebird');
 
@@ -45,6 +48,18 @@ function createProducts() {
 
 db
   .sync({ force: true })
+  .then(() => {
+    User.hasMany(CreditCard);
+    User.hasMany(Address);
+
+    Order.belongsTo(Address, { as: 'billingAddress' });
+    Order.belongsTo(Address, { as: 'shippingAddress' });
+    Order.belongsToMany(Product, { through: 'orderItemLists' });
+
+    Order.belongsTo(User);
+
+    CreditCard.belongsTo(User);
+  })
   .then(() => Promise.all(createUsers()))
   .then(() => Promise.all(createProducts()))
   .then(
