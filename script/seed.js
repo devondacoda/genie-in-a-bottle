@@ -32,7 +32,7 @@ function product() {
       name: Faker.commerce.productName(),
       price: Faker.commerce.price(),
       description: Faker.lorem.paragraph(3),
-      picture: `./img/${i}.jpg`,
+      picture: `/img/${i}.jpg`,
       inventory: Math.floor(Math.random() * 10) + 1,
     }));
   }
