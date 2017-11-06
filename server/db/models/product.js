@@ -43,7 +43,7 @@ const Product = db.define('product', {
 });
 
 Product.addToCart = function (productId, userId, quantity) {
-  Order.findOne({
+  return Order.findOne({
     where: {
       userId,
       isCart: true,
@@ -58,7 +58,9 @@ Product.addToCart = function (productId, userId, quantity) {
       })     
     })
     .then(foundOrderItemList => {
-      foundOrderItemList[0].update({quantity})
+      foundOrderItemList[0].update({
+          quantity: foundOrderItemList[0].quantity + Number(quantity)
+        });
     })
 };
 
