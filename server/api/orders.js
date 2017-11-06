@@ -47,7 +47,7 @@ router.route('/:orderId')
   })
 
   .put((req, res, next) => {
-    const orderId = req.params.orderId;
+    const { orderId } = req.params;
     Order.findOne({
       where: {
         id: orderId,
@@ -73,3 +73,15 @@ router.route('/:orderId')
       .catch(next);
   });
 
+router.route('/user/:userId')
+  .get((req, res, next) => {
+    const { userId } = req.params;
+    Order.findAll({
+      where: {
+        userId,
+        isCart: false,
+      },
+    })
+      .then(foundOrders => res.json(foundOrders))
+      .catch(next);
+  });

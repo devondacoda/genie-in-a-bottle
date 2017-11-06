@@ -14,7 +14,7 @@ export function UserProfile(props) {
             <h1 className="text-center">{user.name}</h1>
             <div>
               <h2>Products</h2>
-              <AllOrders />
+              <AllOrders userId={user.id} />
             </div>
           </div>
         : <div>
