@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { fetchOrders } from '../store/orders';
+import { fetchOrders } from '../store/order';
 
 
 class AllOrders extends Component {
@@ -15,7 +15,7 @@ class AllOrders extends Component {
 
   render() {
     const { orders } = this.props;
-    console.log('YOOOOOOOOO', this.props);
+    console.log('YOOOOOOOOO', this.props.orders);
     return (
       <div>
         <h3>Loaderino?</h3>
