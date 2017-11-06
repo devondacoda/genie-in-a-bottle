@@ -20,21 +20,19 @@ function users() {
   return usersProm;
 }
 
-function createUsers () {
-  return Promise.map(users(), function (user) {
-    return user.save();
-  });
+function createUsers() {
+  return Promise.map(users(), user => user.save());
 }
 
 function product() {
   Faker.seed(123);
   const products = [];
-  for (let i = 0; i < 15; i++) {
+  for (let i = 1; i < 16; i++) {
     products.push(Product.build({
       name: Faker.commerce.productName(),
       price: Faker.commerce.price(),
       description: Faker.lorem.paragraph(3),
-      picture: Faker.image.avatar(),
+      picture: `./img/${i}.jpg`,
       inventory: Math.floor(Math.random() * 10) + 1,
     }));
   }
@@ -42,9 +40,7 @@ function product() {
 }
 
 function createProducts() {
-  return Promise.map(product(), function(user) {
-    return user.save();
-  });
+  return Promise.map(product(), user => user.save());
 }
 
 db
@@ -52,15 +48,15 @@ db
   .then(() => Promise.all(createUsers()))
   .then(() => Promise.all(createProducts()))
   .then(
-    function() {
-      console.log("Seeding successful");
+    () => {
+      console.log('Seeding successful');
     },
-    function(err) {
-      console.error("Error while seeding");
+    (err) => {
+      console.error('Error while seeding');
       console.error(err.stack);
-    }
+    },
   )
-  .finally(function() {
+  .finally(() => {
     db.close();
     return null;
   });
