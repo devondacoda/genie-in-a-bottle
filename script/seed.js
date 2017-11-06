@@ -1,6 +1,9 @@
 const db = require('../server/db/db');
 const User = require('../server/db/models/user');
 const Product = require('../server/db/models/product');
+const Address = require('../server/db/models/address');
+const CreditCard = require('../server/db/models/creditCard');
+const Order = require('../server/db/models/order');
 const Faker = require('faker');
 const Promise = require('bluebird');
 
@@ -27,7 +30,7 @@ function createUsers() {
 function product() {
   Faker.seed(123);
   const products = [];
-  for (let i = 1; i < 16; i++) {
+  for (let i = 1; i < 15; i++) {
     products.push(Product.build({
       name: Faker.commerce.productName(),
       price: Faker.commerce.price(),
@@ -44,9 +47,21 @@ function createProducts() {
 }
 
 db
-  .sync({ force: true })
+  .sync({ force: false })
   .then(() => Promise.all(createUsers()))
   .then(() => Promise.all(createProducts()))
+  .then(() => {
+    User.hasMany(CreditCard);
+    User.hasMany(Address);
+
+    Order.belongsTo(Address, { as: 'billingAddress' });
+    Order.belongsTo(Address, { as: 'shippingAddress' });
+    Order.belongsToMany(Product, { through: 'orderItemLists' });
+
+    Order.belongsTo(User);
+
+    CreditCard.belongsTo(User);
+  })
   .then(
     () => {
       console.log('Seeding successful');

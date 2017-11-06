@@ -17,12 +17,8 @@ router.get('/:userId', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  User.findOrCreate({
-    where: req.body,
-  })
-    .then(createdUser =>
-      res.status(201)
-        .json(createdUser))
+  User.findCreateFind({ where: req.body })
+    .then(createdUser => res.status(201).json(createdUser))
     .catch(next);
 });
 
