@@ -24,7 +24,7 @@ function UserProfile(props) {
             </div>
           </div>
         : <div>
-            <h1 className="text-center">Must log in to have a profile</h1>
+          <h1 className="text-center">Must log in to have a profile</h1>
           </div>
       }
     </div>
