@@ -6,20 +6,13 @@ import { fetchSearch } from '../store/filterList';
 class SearchBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      search: '', // redux this make new componebt for search componebt
-    };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    // this.state = this.setState({
-    //   search: e.target.search.value
-    // });
     const tofilter = this.props.products.filter(filtered => filtered.name.match(e.target.search.value));
     this.props.fetchSearch(tofilter);
-    // e.target.search.value;
   }
 
   render() {
@@ -41,5 +34,4 @@ class SearchBar extends Component {
 
 const mapStateToProps = state => ({ products: state.products });
 const mapDispatchToProps = { fetchSearch };
-// dispatch
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
