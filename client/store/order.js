@@ -53,7 +53,6 @@ export const addProduct = (itemId, quantity) => (dispatch) => {
 export const getCurrentCart = () => (dispatch) => {
   axios.get('/api/orders/cart')
     .then(res => {
-      console.log('******res', res)
       dispatch(getCart(res.data))});
 };
 
@@ -67,7 +66,6 @@ export const fetchOrders = () =>
 export const completeCheckout = () => (dispatch) => {
   axios.put(`/api/orders/user/orders`)
     .then((res) => {
-      console.log('res*****', res)
       dispatch(submitOrder(res.data))
     })
 }

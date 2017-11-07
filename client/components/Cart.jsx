@@ -44,7 +44,6 @@ class Cart extends Component {
 
 const mapStateToProps = state => {
   const { cart } = state.order;
-  console.log(cart)
   return {cart}
 };
 
