@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { AllOrders } from './index';
 
 
-export function UserProfile(props) {
+function UserProfile(props) {
   const { isLoggedIn, user } = props;
   return (
     <div>
@@ -14,7 +14,7 @@ export function UserProfile(props) {
             <h1 className="text-center">{user.name}</h1>
             <div>
               <h2>Products</h2>
-              <AllOrders userId={user.id} />
+              <AllOrders />
             </div>
           </div>
         : <div>
