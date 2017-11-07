@@ -8,17 +8,23 @@ import { AllOrders } from './index';
 function UserProfile(props) {
   const { isLoggedIn, user } = props;
   return (
-    <div>
+    <div className="my-5">
       {isLoggedIn
-        ? <div>
+        ? user.isAdmin 
+          ? <div>
+              <NavLink to="#">Edit Users</NavLink>
+              <NavLink to="#">Edit Orders</NavLink>
+              <NavLink to="#">Edit Products</NavLink>         
+            </div>
+          :<div>
             <h1 className="text-center">{user.name}</h1>
             <div>
-              <h2>Products</h2>
+              <h2 className="text-center prev-orders my-5">Previous Orders</h2>
               <AllOrders />
             </div>
           </div>
         : <div>
-            <h1 className="text-center">Must log in to have a profile</h1>
+          <h1 className="text-center">Must log in to have a profile</h1>
           </div>
       }
     </div>

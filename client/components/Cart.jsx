@@ -5,16 +5,17 @@ import CartItem from './CartItem';
 import { getCurrentCart, completeCheckout } from '../store';
 
 class Cart extends Component {
-
   render() {
+    console.log('this.props.cart:*******',this.props.cart)
     const products = this.props.cart.products 
     ? this.props.cart.products
     : []
 
     return (
       <div>
-        <div className="py-5">
+        <div className="my-5">
           <h1 className="text-center">Your Cart</h1>
+          <h3 className="text-center">Total: $ {this.props.cart.total}</h3>
         </div>
         {
           products.length
@@ -23,7 +24,8 @@ class Cart extends Component {
           ))
           : <h2>Empty Cart</h2>
         }
-        <div className="py-5 mx-auto w-50">
+        <h3 className="text-center">Total: $ {this.props.cart.total}</h3>
+        <div className="my-5 mx-auto w-50">
         {
           products.length
           ? 

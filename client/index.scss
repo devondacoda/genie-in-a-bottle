@@ -1,7 +1,9 @@
 @import "~bootstrap/scss/bootstrap.scss";
+@import url('https://fonts.googleapis.com/css?family=Oxygen');
 
 body {
-  font-family: sans-serif;
+  // font-family: sans-serif;
+  font-family: 'Oxygen', sans-serif;
 
   a {
     text-decoration: none;
@@ -31,6 +33,39 @@ body {
     max-width: 20vw;
     min-width: 20vw;
   }
+
+  .navbar {
+    justify-content: center;
+    height: 70px;
+    width: 100%;
+  
+    .search-bar {
+      justify-content: center;
+      margin: auto;
+      align-items: center;
+    }
+  
+    .greeting {
+      justify-content: center;
+      margin: auto;
+      align-items: center;
+      color: white;
+    }
+  }
+
+  .single-product {
+    width: 50%;
+    margin: auto;
+  }
+
+  .prev-orders {
+    color: goldenrod;
+  }
+
+  .order-status {
+    color: rgb(74, 165, 74);
+  }
+  
 
 }
 

@@ -5,10 +5,11 @@ import thunkMiddleware from 'redux-thunk';
 import user from './user';
 import products from './products';
 import order from './order';
+import search from './filterList';
 import { authenticate } from './auth';
 
 const reducer = combineReducers({
-  user, products, order, authenticate,
+  user, products, order, authenticate, search,
 });
 
 const middleware = composeWithDevTools(applyMiddleware(

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Order, OrderItemList } = require('../db/models');
+const { Order, OrderItemList, Product } = require('../db/models');
 
 module.exports = router;
 
@@ -24,15 +24,11 @@ router.get('/cart', (req, res, next) => {
     include: [{ all: true, nested: true }] // Eager loading not working here? But works in route('/:orderId')
   })
   .then(order => {
+    order.total = order.products.reduce((prev, curr) => {
+      return (curr.price * curr.orderItemLists.quantity) + prev
+    }, 0);
     res.json(order);
   })
-  // .then(foundCart => {
-  //   return OrderItemList.findAll({
-  //     where: { orderId: foundCart.id }
-  //   })
-  // }).then(arrOfItems => {
-  //   res.status(200).json(arrOfItems);
-  // })
 })
 
 router.route('/:orderId')
@@ -90,10 +86,29 @@ router.route('/user/orders')
     const userId = Number(req.session.passport.user);    
     Order.findOne({
       where: { userId, isCart: true },
+      include: [{ all: true, nested: true }]
     })
     .then(foundCart => {
-      foundCart.update({
+      return foundCart.update({
         isCart: false,
+        status: 'Fulfilled',
+      })
+    })
+    .then(checkedOutCart => {
+      return OrderItemList.findAll({
+        where: {
+          orderId: checkedOutCart.id
+        }
+      })
+    })
+    .then(arrOfOrderItems => {
+      arrOfOrderItems.map(item => {
+        Product.findById(item.productId)
+        .then(foundProduct => {
+          foundProduct.update({
+            inventory: foundProduct.inventory - item.quantity,
+          })
+        })
       })
     })
     .then(() => {
