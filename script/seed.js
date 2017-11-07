@@ -9,7 +9,7 @@ const Promise = require('bluebird');
 
 
 function users() {
-  Faker.seed(123);
+  Faker.seed(124);
   const usersProm = [];
   for (let i = 0; i < 5; i++) {
     usersProm.push(User.build({
@@ -20,6 +20,14 @@ function users() {
       password: '1',
     }));
   }
+  usersProm.push(User.build({
+    name: 'Brian Deriel',
+    email: 'b@gmail.com',
+    googleId: 'acampingburger',
+    salt: Faker.image.avatar(),
+    password: '1',
+    isAdmin: true,
+  }));
   return usersProm;
 }
 
@@ -30,7 +38,7 @@ function createUsers() {
 function product() {
   Faker.seed(123);
   const products = [];
-  for (let i = 1; i < 15; i++) {
+  for (let i = 1; i < 16; i++) {
     products.push(Product.build({
       name: Faker.commerce.productName(),
       price: Faker.commerce.price(),
