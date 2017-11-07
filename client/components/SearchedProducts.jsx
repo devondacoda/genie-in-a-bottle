@@ -19,7 +19,7 @@ function SearchedProducts(props) {
           { props.filterProducts.length && props.filterProducts.map(product => (
             <li className="col-md-3 product" key={product.id}>
               <NavLink to={`/product/${product.id}`}>
-                <img alt="img not available" className="product-pic" src={product.picture}/>
+                <img alt="img not available" className="product-pic" src={product.picture} />
                 <h4>{product.name}</h4>
               </NavLink>
             </li>

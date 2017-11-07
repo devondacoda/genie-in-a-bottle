@@ -1,5 +1,8 @@
+import history from '../history';
+
 const SEARCH = 'SEARCH';
 const searchProducts = filterProducts => ({ type: SEARCH, filterProducts });
+
 
 export default function reducer(state = [], action) {
   switch (action.type) {
@@ -12,5 +15,6 @@ export default function reducer(state = [], action) {
 
 export const fetchSearch = foundProducts => (dispatch) => {
   const action = searchProducts(foundProducts);
-  dispatch(action);
+  dispatch(action)
+  history.push('/search')
 };
