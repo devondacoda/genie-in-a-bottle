@@ -24,9 +24,11 @@ router.get('/cart', (req, res, next) => {
     include: [{ all: true, nested: true }] // Eager loading not working here? But works in route('/:orderId')
   })
   .then(order => {
-    order.total = order.products.reduce((prev, curr) => {
-      return (curr.price * curr.orderItemLists.quantity) + prev
-    }, 0);
+    order.update({
+      total: order.products.reduce((prev, curr) => {
+        return (curr.price * curr.orderItemLists.quantity) + prev
+      }, 0)
+    })
     res.json(order);
   })
 })

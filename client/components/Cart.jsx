@@ -6,7 +6,6 @@ import { getCurrentCart, completeCheckout } from '../store';
 
 class Cart extends Component {
   render() {
-    console.log('this.props.cart:*******',this.props.cart)
     const products = this.props.cart.products 
     ? this.props.cart.products
     : []
