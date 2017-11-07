@@ -8,12 +8,12 @@ import { AllOrders } from './index';
 function UserProfile(props) {
   const { isLoggedIn, user } = props;
   return (
-    <div>
+    <div className="my-5">
       {isLoggedIn
         ? <div>
             <h1 className="text-center">{user.name}</h1>
             <div>
-              <h2>Products</h2>
+              <h2 className="text-center prev-orders my-5">Previous Orders</h2>
               <AllOrders />
             </div>
           </div>
