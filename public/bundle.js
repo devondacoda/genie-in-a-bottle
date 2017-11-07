@@ -979,48 +979,6 @@ function localstorage() {
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * 
- */
-
-function makeEmptyFunction(arg) {
-  return function () {
-    return arg;
-  };
-}
-
-/**
- * This function accepts and discards inputs; it has no side effects. This is
- * primarily useful idiomatically for overridable function endpoints which
- * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
- */
-var emptyFunction = function emptyFunction() {};
-
-emptyFunction.thatReturns = makeEmptyFunction;
-emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-emptyFunction.thatReturnsThis = function () {
-  return this;
-};
-emptyFunction.thatReturnsArgument = function (arg) {
-  return arg;
-};
-
-module.exports = emptyFunction;
-
-/***/ }),
-/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1077,6 +1035,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * 
+ */
+
+function makeEmptyFunction(arg) {
+  return function () {
+    return arg;
+  };
+}
+
+/**
+ * This function accepts and discards inputs; it has no side effects. This is
+ * primarily useful idiomatically for overridable function endpoints which
+ * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+ */
+var emptyFunction = function emptyFunction() {};
+
+emptyFunction.thatReturns = makeEmptyFunction;
+emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+emptyFunction.thatReturnsThis = function () {
+  return this;
+};
+emptyFunction.thatReturnsArgument = function (arg) {
+  return arg;
+};
+
+module.exports = emptyFunction;
 
 /***/ }),
 /* 11 */
@@ -2347,7 +2347,7 @@ module.exports = emptyObject;
 
 
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -4387,7 +4387,7 @@ module.exports = function bind(fn, thisArg) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchOrders = exports.getCurrentCart = exports.addProduct = undefined;
+exports.completeCheckout = exports.fetchOrders = exports.getCurrentCart = exports.addProduct = undefined;
 
 exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultOrder;
@@ -4398,10 +4398,13 @@ exports.default = function () {
       return Object.assign({}, state, { cart: [].concat(_toConsumableArray(state.cart), [action.item]) });
 
     case GET_CART:
-      return Object.assign({}, state, { cart: action.items });
+      return Object.assign({}, state, { cart: action.cart });
 
     case GET_ORDERS:
       return Object.assign({}, state, { pastOrders: action.orders });
+
+    case SUBMIT_ORDER:
+      return Object.assign({}, state, { cart: action.newCart, pastOrders: [].concat(_toConsumableArray(state.pastOrders), [state.cart]) });
 
     default:
       return state;
@@ -4424,21 +4427,25 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var GET_ORDERS = 'GET_ORDERS';
 var GET_CART = 'GET_CART';
 var ADD_CART_ITEM = 'ADD_CART_ITEM';
+var SUBMIT_ORDER = 'SUBMIT_ORDER';
 
 // Action Creators
 var addToCart = function addToCart(item) {
   return { type: ADD_CART_ITEM, item: item };
 };
-var getCart = function getCart(items) {
-  return { type: GET_CART, items: items };
+var getCart = function getCart(cart) {
+  return { type: GET_CART, cart: cart };
 };
 var getOrders = function getOrders(orders) {
   return { type: GET_ORDERS, orders: orders };
 };
+var submitOrder = function submitOrder(newCart) {
+  return { type: SUBMIT_ORDER, newCart: newCart };
+};
 
 // initial state
 var defaultOrder = {
-  cart: [],
+  cart: {},
   pastOrders: []
 };
 
@@ -4459,17 +4466,25 @@ var addProduct = exports.addProduct = function addProduct(itemId, quantity) {
 var getCurrentCart = exports.getCurrentCart = function getCurrentCart() {
   return function (dispatch) {
     _axios2.default.get('/api/orders/cart').then(function (res) {
-      return dispatch(getCart(res.data));
+      dispatch(getCart(res.data));
     });
   };
 };
 
-var fetchOrders = exports.fetchOrders = function fetchOrders(userId) {
+var fetchOrders = exports.fetchOrders = function fetchOrders() {
   return function (dispatch) {
-    return _axios2.default.get('/api/orders/user/' + userId).then(function (res) {
-      return dispatch(getOrders(res.data));
+    return _axios2.default.get('/api/orders/user/orders').then(function (res) {
+      dispatch(getOrders(res.data));
     }).catch(function (err) {
       return console.log(err);
+    });
+  };
+};
+
+var completeCheckout = exports.completeCheckout = function completeCheckout() {
+  return function (dispatch) {
+    _axios2.default.put('/api/orders/user/orders').then(function (res) {
+      dispatch(submitOrder(res.data));
     });
   };
 };
@@ -4886,7 +4901,7 @@ Polling.prototype.uri = function () {
  * @typechecks
  */
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 
 /**
  * Upstream version of event listener. Does not take into account specific
@@ -9197,7 +9212,7 @@ var _reactRedux = __webpack_require__(5);
 
 var _reactRouter = __webpack_require__(197);
 
-var _reactRouterDom = __webpack_require__(10);
+var _reactRouterDom = __webpack_require__(9);
 
 var _propTypes = __webpack_require__(2);
 
@@ -9293,6 +9308,7 @@ var mapDispatch = function mapDispatch(dispatch) {
       dispatch((0, _store.me)());
       dispatch((0, _store.fetchProducts)());
       dispatch((0, _store.getCurrentCart)());
+      dispatch((0, _store.fetchOrders)());
     }
   };
 };
@@ -10440,33 +10456,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var AllOrders = function (_Component) {
   _inherits(AllOrders, _Component);
 
-  function AllOrders(props) {
+  function AllOrders() {
     _classCallCheck(this, AllOrders);
 
-    return _possibleConstructorReturn(this, (AllOrders.__proto__ || Object.getPrototypeOf(AllOrders)).call(this, props));
+    return _possibleConstructorReturn(this, (AllOrders.__proto__ || Object.getPrototypeOf(AllOrders)).apply(this, arguments));
   }
 
   _createClass(AllOrders, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      var userId = this.props.userId;
-
-      this.props.fetchOrders(userId);
-    }
-  }, {
     key: 'render',
     value: function render() {
       var orders = this.props.orders;
 
-      console.log('YOOOOOOOOO', this.props);
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          'h3',
-          null,
-          'Loaderino?'
-        )
+        orders.length && orders.map(function (order) {
+          return _react2.default.createElement(
+            'li',
+            { key: order.id },
+            _react2.default.createElement(
+              'h3',
+              null,
+              'Order Status: ',
+              order.status
+            ),
+            _react2.default.createElement(
+              'h4',
+              null,
+              'Total Price: ',
+              order.total
+            ),
+            _react2.default.createElement(
+              'h4',
+              null,
+              'Date of Purchase: ',
+              order.time
+            )
+          );
+        })
       );
     }
   }]);
@@ -10475,9 +10502,16 @@ var AllOrders = function (_Component) {
 }(_react.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-  return { orders: state.orders };
+  return { orders: state.order.pastOrders };
 };
-var mapDispatch = { fetchOrders: _store.fetchOrders };
+var mapDispatch = function mapDispatch(dispatch, ownProps) {
+  return {
+    fetchOrders: function fetchOrders() {
+      console.log('dispatching fetch orders from front');
+      dispatch((0, _store.fetchOrders)());
+    }
+  };
+};
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatch)(AllOrders);
 
 /***/ }),
@@ -10497,7 +10531,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(10);
+var _reactRouterDom = __webpack_require__(9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10578,15 +10612,13 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(10);
+var _reactRouterDom = __webpack_require__(9);
 
 var _CartItem = __webpack_require__(121);
 
 var _CartItem2 = _interopRequireDefault(_CartItem);
 
 var _store = __webpack_require__(11);
-
-var _store2 = _interopRequireDefault(_store);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10608,6 +10640,8 @@ var Cart = function (_Component) {
   _createClass(Cart, [{
     key: 'render',
     value: function render() {
+      var products = this.props.cart.products ? this.props.cart.products : [];
+
       return _react2.default.createElement(
         'div',
         null,
@@ -10620,16 +10654,24 @@ var Cart = function (_Component) {
             'Your Cart'
           )
         ),
-        this.props && this.props.cart.map(function (product) {
+        products.length ? products.map(function (product) {
           return _react2.default.createElement(_CartItem2.default, { key: product.name, product: product });
-        }),
+        }) : _react2.default.createElement(
+          'h2',
+          null,
+          'Empty Cart'
+        ),
         _react2.default.createElement(
           'div',
           { className: 'py-5 mx-auto w-50' },
-          _react2.default.createElement(
+          products.length ? _react2.default.createElement(
             _reactRouterDom.NavLink,
-            { to: '/checkout-success', className: 'btn btn-primary w-100' },
+            { to: '/checkout-success', className: 'btn btn-primary w-100', onClick: this.props.submitCheckout },
             'CHECKOUT'
+          ) : _react2.default.createElement(
+            'button',
+            { className: 'btn btn-primary w-100', disabled: 'true' },
+            'Cart Empty'
           )
         )
       );
@@ -10647,10 +10689,9 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    //     handleSubmit(A BUNCH OF PARAMS TO UPDATE ORDER) {
-    //       event.preventDefault()
-    //       dispatch(SUBMIT ORDER THUNK({PROBALY THE PARAMS AS THIS OBJ}))
-    //     }
+    submitCheckout: function submitCheckout() {
+      dispatch((0, _store.completeCheckout)());
+    }
   };
 };
 
@@ -10798,7 +10839,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(10);
+var _reactRouterDom = __webpack_require__(9);
 
 var _reactRedux = __webpack_require__(5);
 
@@ -10970,26 +11011,77 @@ NavBar.propTypes = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = SearchBar;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _reactRedux = __webpack_require__(5);
 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(9);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function SearchBar() {
-  return _react2.default.createElement(
-    "div",
-    { className: "form-group row mx-5" },
-    _react2.default.createElement("input", { type: "text", placeholder: "Search for something", className: "" }),
-    _react2.default.createElement(
-      "button",
-      null,
-      "Search"
-    )
-  );
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SearchBar = function (_Component) {
+  _inherits(SearchBar, _Component);
+
+  function SearchBar() {
+    _classCallCheck(this, SearchBar);
+
+    var _this = _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).call(this));
+
+    _this.state = {
+      search: '' // redux this make new componebt for search componebt
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(SearchBar, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      console.log(e.target.search.value, '~~~!@#@$@42$');
+      this.state = this.setState({
+        search: e.target.search.value
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'form-group row mx-5' },
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.handleSubmit },
+          _react2.default.createElement('input', { name: 'search', type: 'text', placeholder: 'Search for something', className: '' }),
+          _react2.default.createElement(
+            'button',
+            { type: 'submit' },
+            'Search'
+          )
+        )
+      );
+    }
+  }]);
+
+  return SearchBar;
+}(_react.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return { products: state.products };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(SearchBar);
 
 /***/ }),
 /* 125 */
@@ -11010,7 +11102,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(10);
+var _reactRouterDom = __webpack_require__(9);
 
 var _AddToCart = __webpack_require__(117);
 
@@ -11131,7 +11223,6 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps)(getSingleProduct);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.UserProfile = UserProfile;
 
 var _react = __webpack_require__(0);
 
@@ -11143,7 +11234,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(5);
 
-var _reactRouterDom = __webpack_require__(10);
+var _reactRouterDom = __webpack_require__(9);
 
 var _index = __webpack_require__(15);
 
@@ -11172,7 +11263,7 @@ function UserProfile(props) {
           null,
           'Products'
         ),
-        _react2.default.createElement(_index.AllOrders, { userId: user.id })
+        _react2.default.createElement(_index.AllOrders, null)
       )
     ) : _react2.default.createElement(
       'div',
@@ -11338,6 +11429,7 @@ var mapDispatch = function mapDispatch(dispatch) {
     handleSubmit: function handleSubmit(evt) {
       evt.preventDefault();
       var formName = evt.target.name;
+      // PLEASE LEAVE THIS VARIABLE AS USERNAME. As you can see evt.target.name is occupied above.
       var userName = evt.target.userName ? evt.target.userName.value : null;
       var email = evt.target.email.value;
       var password = evt.target.password.value;
@@ -11380,7 +11472,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(5);
 
-var _reactRouterDom = __webpack_require__(10);
+var _reactRouterDom = __webpack_require__(9);
 
 var _components = __webpack_require__(15);
 
@@ -11461,7 +11553,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(5);
 
-var _reactRouterDom = __webpack_require__(10);
+var _reactRouterDom = __webpack_require__(9);
 
 var _index = __webpack_require__(15);
 
@@ -11631,7 +11723,7 @@ function reducer() {
   }
 }
 
-var authenticate = exports.authenticate = function authenticate(email, password, formName, userName) {
+var authenticate = exports.authenticate = function authenticate(email, password, formName, name) {
   return function (dispatch) {
     if (formName === 'login') {
       _axios2.default.post('/auth/login', { email: email, password: password }).then(function (user) {
@@ -11642,7 +11734,7 @@ var authenticate = exports.authenticate = function authenticate(email, password,
         return _history2.default.push('/');
       }).catch(console.error);
     } else {
-      _axios2.default.post('/auth/signup', { userName: userName, email: email, password: password }).then(function (user) {
+      _axios2.default.post('/auth/signup', { name: name, email: email, password: password }).then(function (user) {
         return dispatch(signUp(user.data));
       }).then(function () {
         return _history2.default.push('/');
@@ -16619,7 +16711,7 @@ function plural(ms, n, name) {
 
 
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 var invariant = __webpack_require__(12);
 var ReactPropTypesSecret = __webpack_require__(36);
 
@@ -16684,7 +16776,7 @@ module.exports = function() {
 
 
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 var invariant = __webpack_require__(12);
 var warning = __webpack_require__(22);
 var assign = __webpack_require__(175);
@@ -17345,7 +17437,7 @@ var _assign = __webpack_require__(66);
 var EventListener = __webpack_require__(52);
 var require$$0 = __webpack_require__(22);
 var hyphenateStyleName = __webpack_require__(151);
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 var camelizeStyleName = __webpack_require__(149);
 var performanceNow = __webpack_require__(155);
 var propTypes = __webpack_require__(2);
@@ -34561,7 +34653,7 @@ module.exports = ReactDOMFiberEntry;
  LICENSE file in the root directory of this source tree.
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0);__webpack_require__(12);var l=__webpack_require__(30),n=__webpack_require__(66),ba=__webpack_require__(52),ca=__webpack_require__(9),da=__webpack_require__(21),ea=__webpack_require__(56),fa=__webpack_require__(53),ha=__webpack_require__(54),ia=__webpack_require__(55);
+var aa=__webpack_require__(0);__webpack_require__(12);var l=__webpack_require__(30),n=__webpack_require__(66),ba=__webpack_require__(52),ca=__webpack_require__(10),da=__webpack_require__(21),ea=__webpack_require__(56),fa=__webpack_require__(53),ha=__webpack_require__(54),ia=__webpack_require__(55);
 function w(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:w("227");
 function ja(a){switch(a){case "svg":return"http://www.w3.org/2000/svg";case "math":return"http://www.w3.org/1998/Math/MathML";default:return"http://www.w3.org/1999/xhtml"}}
 var ka={Namespaces:{html:"http://www.w3.org/1999/xhtml",mathml:"http://www.w3.org/1998/Math/MathML",svg:"http://www.w3.org/2000/svg"},getIntrinsicNamespace:ja,getChildNamespace:function(a,b){return null==a||"http://www.w3.org/1999/xhtml"===a?ja(b):"http://www.w3.org/2000/svg"===a&&"foreignObject"===b?"http://www.w3.org/1999/xhtml":a}},la=null,oa={};
@@ -36186,7 +36278,7 @@ var objectAssign$1 = __webpack_require__(79);
 var require$$0 = __webpack_require__(22);
 var emptyObject = __webpack_require__(21);
 var invariant = __webpack_require__(12);
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 var checkPropTypes = __webpack_require__(35);
 
 /**
@@ -37881,7 +37973,7 @@ module.exports = ReactEntry;
  This source code is licensed under the MIT license found in the
  LICENSE file in the root directory of this source tree.
 */
-var f=__webpack_require__(79),p=__webpack_require__(21);__webpack_require__(12);var r=__webpack_require__(9);
+var f=__webpack_require__(79),p=__webpack_require__(21);__webpack_require__(12);var r=__webpack_require__(10);
 function t(a){for(var b=arguments.length-1,d="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,e=0;e<b;e++)d+="\x26args[]\x3d"+encodeURIComponent(arguments[e+1]);b=Error(d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
 var u={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function v(a,b,d){this.props=a;this.context=b;this.refs=p;this.updater=d||u}v.prototype.isReactComponent={};v.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?t("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};v.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 function w(a,b,d){this.props=a;this.context=b;this.refs=p;this.updater=d||u}function x(){}x.prototype=v.prototype;var y=w.prototype=new x;y.constructor=w;f(y,v.prototype);y.isPureReactComponent=!0;function z(a,b,d){this.props=a;this.context=b;this.refs=p;this.updater=d||u}var A=z.prototype=new x;A.constructor=z;f(A,v.prototype);A.unstable_isAsyncReactComponent=!0;A.render=function(){return this.props.children};
