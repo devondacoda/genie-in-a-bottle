@@ -14,13 +14,8 @@ const Product = db.define('product', {
     allowNull: false,
   },
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.DECIMAL(13, 2),
     allowNull: false,
-    // get() {
-    //   // Format the currency to include a '$' sign
-    //   const formattedPrice = this.getDataValue('price').toFixed(2);
-    //   return `$${formattedPrice}`;
-    // },
   },
   picture: {
     type: Sequelize.STRING,
