@@ -3,6 +3,7 @@ const User = require('../server/db/models/user');
 const Product = require('../server/db/models/product');
 const Address = require('../server/db/models/address');
 const CreditCard = require('../server/db/models/creditCard');
+const Review = require('../server/db/models/review');
 const Order = require('../server/db/models/order');
 const Faker = require('faker');
 const Promise = require('bluebird');
@@ -36,7 +37,7 @@ function createUsers() {
 }
 
 function product() {
-  Faker.seed(123);
+  Faker.seed(124);
   const products = [];
   for (let i = 1; i < 16; i++) {
     products.push(Product.build({
@@ -50,24 +51,44 @@ function product() {
   return products;
 }
 
+function review() {
+  Faker.seed(124);
+  const reviews = [];
+  for (let i = 1; i < 100; i++) {
+    reviews.push(Review.build({
+      title: Faker.commerce.productName(),
+      content: Faker.lorem.paragraph(3),
+      stars: (Math.floor(Math.random() * 5) + 1).toString(),
+     // userId: Math.floor(Math.random() * 4) + 1,
+     // productId: Math.floor(Math.random() * 13) + 1,
+    }));
+  }
+  return reviews;
+}
+
+
 function createProducts() {
   return Promise.map(product(), user => user.save());
+}
+
+function createReviews() {
+  return Promise.map(review(), user => user.save());
 }
 
 db
   .sync({ force: false })
   .then(() => Promise.all(createUsers()))
   .then(() => Promise.all(createProducts()))
+  .then(() => Promise.all(createReviews()))
   .then(() => {
     User.hasMany(CreditCard);
     User.hasMany(Address);
-
     Order.belongsTo(Address, { as: 'billingAddress' });
     Order.belongsTo(Address, { as: 'shippingAddress' });
     Order.belongsToMany(Product, { through: 'orderItemLists' });
-
+    Review.belongsTo(User);
+    Review.belongsTo(Product);
     Order.belongsTo(User);
-
     CreditCard.belongsTo(User);
   })
   .then(

@@ -3,15 +3,16 @@ const db = require('../db');
 
 const Review = db.define('review', {
   title: {
-    type: Sequelize.STRING(140),
+    type: Sequelize.TEXT,
+    validate: { len: [1, 140] },
   },
   content: {
     type: Sequelize.TEXT,
     allowNull: false,
-    validate: { len: [0, 10000] },
+    validate: { len: [1, 500] },
   },
-  likes: {
-    type: Sequelize.ENUM('Like', 'Dislike'),
+  stars: {
+    type: Sequelize.ENUM('1', '2', '3', '4', '5'),
   },
 });
 
