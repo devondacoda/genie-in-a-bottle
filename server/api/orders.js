@@ -97,9 +97,10 @@ router.route('/user/orders')
       })
     })
     .then(checkedOutCart => {
+      // const productsOnCart = checkedOutCart.products;
       return OrderItemList.findAll({
         where: {
-          orderId: checkedOutCart.id
+          orderId: checkedOutCart.id,
         }
       })
     })
@@ -109,6 +110,12 @@ router.route('/user/orders')
         .then(foundProduct => {
           foundProduct.update({
             inventory: foundProduct.inventory - item.quantity,
+          })
+          return [item, foundProduct.price]
+        })
+        .then(([item, price]) => {
+          item.update({
+            fixedPrice: price
           })
         })
       })
