@@ -3,13 +3,14 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 function SearchedProducts(props) {
+  console.log('hello', props);
   return (
     <div>
       <div className="my-4 ">
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h1 className="text-center">All Products</h1>
+              <h1 className="text-center">Found Products</h1>
             </div>
           </div>
         </div>
@@ -23,13 +24,14 @@ function SearchedProducts(props) {
                 <h4>{product.name}</h4>
               </NavLink>
             </li>
-            ))}
+      ))}
         </ul>
       </div>
     </div>
   );
 }
 
-const mapStateToProps = state => ({ filterProducts: state.filterProducts });
+const mapStateToProps = state => ({ filterProducts: state.search });
 
 export default connect(mapStateToProps)(SearchedProducts);
+
