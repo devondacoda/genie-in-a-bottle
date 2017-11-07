@@ -6,10 +6,6 @@ const Review = db.define('review', {
     type: Sequelize.TEXT,
     allowNull: false,
   },
-  description: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-  },
   likes: {
     type: Sequelize.ENUM('Like', 'dislike'),
   },
