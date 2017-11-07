@@ -12,7 +12,7 @@ class Cart extends Component {
 
     return (
       <div>
-        <div className="py-5">
+        <div className="my-5">
           <h1 className="text-center">Your Cart</h1>
         </div>
         {

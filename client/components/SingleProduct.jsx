@@ -23,12 +23,13 @@ class getSingleProduct extends Component {
     const singleProduct = this.props.products.filter(product => product.id === productId);
     return (
       <div>
+        <div className="text-center single-product">
         <h1>{singleProduct.length && singleProduct[0].name}</h1>
         <img src={singleProduct.length && singleProduct[0].picture} alt="mario messed up" />
         <p>{singleProduct.length && singleProduct[0].description}</p>
         <h3>Stock: {singleProduct.length && singleProduct[0].inventory}</h3>
-        <h3>category</h3>
-        <h3>Price: ${singleProduct.length && singleProduct[0].price}.69</h3>
+        <h3>Category: </h3>
+        <h3>Price: ${singleProduct.length && singleProduct[0].price}</h3>
         <form>
           <select onChange={this.handleChange}>
             <option>Quantity</option>
@@ -38,6 +39,7 @@ class getSingleProduct extends Component {
           </select>
         </form>
         <AddToCart itemId={productId} quantity={this.state.quantity} stock={singleProduct.length && singleProduct[0].inventory} />
+        </div>
       </div>
     );
   }
