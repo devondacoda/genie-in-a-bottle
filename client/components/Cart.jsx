@@ -5,7 +5,6 @@ import CartItem from './CartItem';
 import { getCurrentCart, completeCheckout } from '../store';
 
 class Cart extends Component {
-
   render() {
     const products = this.props.cart.products 
     ? this.props.cart.products
@@ -13,7 +12,7 @@ class Cart extends Component {
 
     return (
       <div>
-        <div className="py-5">
+        <div className="my-5">
           <h1 className="text-center">Your Cart</h1>
         </div>
         {
