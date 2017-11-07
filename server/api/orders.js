@@ -14,7 +14,7 @@ router.route('/')
     Order.create(req.body).then(createdOrder =>
       res.send(`Order #${createdOrder.id} was created `))
       .catch(next);
-    });
+  });
 
 // Route for getting current cart
 router.get('/cart', (req, res, next) => {
@@ -23,10 +23,10 @@ router.get('/cart', (req, res, next) => {
     where: { userId, isCart: true },
     include: [{ all: true, nested: true }] // Eager loading not working here? But works in route('/:orderId')
   })
-  .then(order => {
-    res.json(order);
-  })
-})
+    .then((order) => {
+      res.json(order);
+    })
+});
 
 router.route('/:orderId')
   .get((req, res, next) => {
@@ -85,34 +85,34 @@ router.route('/user/orders')
       where: { userId, isCart: true },
       include: [{ all: true, nested: true }]
     })
-    .then(foundCart => {
-      return foundCart.update({
-        isCart: false,
-        status: 'Fulfilled',
-      })
-    })
-    .then(checkedOutCart => {
-      return OrderItemList.findAll({
-        where: {
-          orderId: checkedOutCart.id
-        }
-      })
-    })
-    .then(arrOfOrderItems => {
-      arrOfOrderItems.map(item => {
-        Product.findById(item.productId)
-        .then(foundProduct => {
-          foundProduct.update({
-            inventory: foundProduct.inventory - item.quantity,
-          })
+      .then(foundCart => {
+        return foundCart.update({
+          isCart: false,
+          status: 'Fulfilled',
         })
       })
-    })
-    .then(() => {
-      return Order.create({status: 'Pending', isCart: true, userId})
-    })
-    .then((newCart) => {
-      res.status(200).json(newCart);
-    })
+      .then(checkedOutCart => {
+        return OrderItemList.findAll({
+          where: {
+            orderId: checkedOutCart.id
+          }
+        })
+      })
+      .then(arrOfOrderItems => {
+        arrOfOrderItems.map(item => {
+          Product.findById(item.productId)
+            .then(foundProduct => {
+              foundProduct.update({
+                inventory: foundProduct.inventory - item.quantity,
+              })
+            })
+        })
+      })
+      .then(() => {
+        return Order.create({status: 'Pending', isCart: true, userId})
+      })
+      .then((newCart) => {
+        res.status(200).json(newCart);
+      })
   })
 
