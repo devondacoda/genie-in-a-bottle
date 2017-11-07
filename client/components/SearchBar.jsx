@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import { fetchSearch } from '../store/filterList';
 
 class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: "" // redux this make new componebt for search componebt
+      search: '', // redux this make new componebt for search componebt
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -16,10 +17,8 @@ class SearchBar extends Component {
     // this.state = this.setState({
     //   search: e.target.search.value
     // });
-    const tofilter = this.props.products.filter(filtered=>{
-      return filtered.name.match(e.target.search.value)
-    })
-    console.log(tofilter);
+    const tofilter = this.props.products.filter(filtered => filtered.name.match(e.target.search.value));
+    this.props.fetchSearch(tofilter);
     // e.target.search.value;
   }
 
@@ -41,5 +40,6 @@ class SearchBar extends Component {
 }
 
 const mapStateToProps = state => ({ products: state.products });
+const mapDispatchToProps = { fetchSearch };
 // dispatch
-export default connect(mapStateToProps)(SearchBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

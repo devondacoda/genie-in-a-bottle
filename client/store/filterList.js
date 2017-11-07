@@ -10,6 +10,7 @@ export default function reducer(state = [], action) {
   }
 }
 
-export const fetchSearch = (query) => dispatch => {
-    query.
+export const fetchSearch = foundProducts => (dispatch) => {
+  const action = searchProducts(foundProducts);
+  dispatch(action);
 };
