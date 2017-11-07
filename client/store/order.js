@@ -4,11 +4,9 @@ import history from '../history';
 // Action Types
 const GET_ORDERS = 'GET_ORDERS';
 const GET_CART = 'GET_CART';
-const ADD_CART_ITEM = 'ADD_CART_ITEM';
 const SUBMIT_ORDER = 'SUBMIT_ORDER';
 
 // Action Creators
-const addToCart = item => ({ type: ADD_CART_ITEM, item });
 const getCart = cart => ({ type: GET_CART, cart });
 const getOrders = orders => ({ type: GET_ORDERS, orders });
 const submitOrder = (newCart) => ({ type: SUBMIT_ORDER, newCart })
@@ -22,9 +20,6 @@ const defaultOrder = {
 // Reducer
 export default function (state = defaultOrder, action) {
   switch (action.type) {
-    case ADD_CART_ITEM:
-      return Object.assign({}, state, { cart: [...state.cart, action.item] });
-
     case GET_CART:
       return Object.assign({}, state, { cart: action.cart });
     
@@ -43,7 +38,7 @@ export default function (state = defaultOrder, action) {
 export const addProduct = (itemId, quantity) => (dispatch) => {
   axios.put(`/api/products/${itemId}/add`, { quantity })
     .then((res) => {
-      dispatch(addToCart(res.data));
+      dispatch(getCurrentCart());
     })
     .then(() => {
       history.push('/');

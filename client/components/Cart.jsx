@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import CartItem from './CartItem';
 import { getCurrentCart, completeCheckout } from '../store';
+import store from '../store';
 
 class Cart extends Component {
-
   render() {
     const products = this.props.cart.products 
     ? this.props.cart.products
