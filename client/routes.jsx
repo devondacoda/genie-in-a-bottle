@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
 import { Main, Login, Signup, UserHome, SingleProduct, Cart, CheckoutSuccess, AllProducts, UserProfile } from './components';
-import { me, fetchProducts, getCurrentCart } from './store';
+import { me, fetchProducts, getCurrentCart, fetchOrders } from './store';
 /**
  * COMPONENT
  */
@@ -63,6 +63,7 @@ const mapDispatch = (dispatch) => {
       dispatch(me());
       dispatch(fetchProducts());
       dispatch(getCurrentCart());
+      dispatch(fetchOrders());
     },
   };
 };

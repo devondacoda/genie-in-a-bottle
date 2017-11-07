@@ -4,34 +4,30 @@ import { fetchOrders } from '../store/order';
 
 
 class AllOrders extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentWillMount() {
-    const { userId } = this.props;
-    this.props.fetchOrders(userId)
-  }
 
   render() {
     const { orders } = this.props;
-    console.log('YOOOOOOOOO', this.props.orders);
     return (
       <div>
-        <h3>Loaderino?</h3>
-        {/* {orders.map(order =>
+        {
+          orders.length && orders.map(order =>
         (
           <li key={order.id}>
-            <h3>{order.status}</h3>
-            <h4>{order.total}</h4>
-            <h4>{order.time}</h4>
+            <h3>Order Status: {order.status}</h3>
+            <h4>Total Price: {order.total}</h4>
+            <h4>Date of Purchase: {order.time}</h4>
           </li>
-        ))} */}
+        ))}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({ orders: state.orders });
-const mapDispatch = { fetchOrders };
+const mapStateToProps = state => ({ orders: state.order.pastOrders });
+const mapDispatch = (dispatch, ownProps) => ({ 
+  fetchOrders() {
+    console.log('dispatching fetch orders from front')
+    dispatch(fetchOrders())
+  } 
+});
 export default connect(mapStateToProps, mapDispatch)(AllOrders);

@@ -63,4 +63,3 @@ Product.addToCart = function (productId, userId, quantity) {
 
 module.exports = Product;
 
-// foundCart.addProduct(productId)
