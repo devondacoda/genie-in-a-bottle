@@ -26,7 +26,6 @@ class AllOrders extends Component {
 const mapStateToProps = state => ({ orders: state.order.pastOrders });
 const mapDispatch = dispatch => ({
   fetchOrders() {
-    console.log('dispatching fetch orders from front');
     dispatch(fetchOrders());
   },
 });
