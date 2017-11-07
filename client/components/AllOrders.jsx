@@ -6,7 +6,6 @@ import { fetchOrders } from '../store/order';
 class AllOrders extends Component {
   render() {
     const { orders } = this.props;
-    console.log('mamamia',orders)
     return (
       <div className="text-center">
         {
