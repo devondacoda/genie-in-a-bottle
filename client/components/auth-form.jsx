@@ -65,6 +65,7 @@ const mapDispatch = dispatch => ({
   handleSubmit(evt) {
     evt.preventDefault();
     const formName = evt.target.name;
+    // PLEASE LEAVE THIS VARIABLE AS USERNAME. As you can see evt.target.name is occupied above.
     const userName = evt.target.userName ? evt.target.userName.value : null;
     const email = evt.target.email.value;
     const password = evt.target.password.value;

@@ -5,15 +5,17 @@ import history from '../history';
 const GET_ORDERS = 'GET_ORDERS';
 const GET_CART = 'GET_CART';
 const ADD_CART_ITEM = 'ADD_CART_ITEM';
+const SUBMIT_ORDER = 'SUBMIT_ORDER';
 
 // Action Creators
 const addToCart = item => ({ type: ADD_CART_ITEM, item });
-const getCart = items => ({ type: GET_CART, items });
+const getCart = cart => ({ type: GET_CART, cart });
 const getOrders = orders => ({ type: GET_ORDERS, orders });
+const submitOrder = (newCart) => ({ type: SUBMIT_ORDER, newCart })
 
 // initial state
 const defaultOrder = {
-  cart: [],
+  cart: {},
   pastOrders: [],
 };
 
@@ -24,10 +26,13 @@ export default function (state = defaultOrder, action) {
       return Object.assign({}, state, { cart: [...state.cart, action.item] });
 
     case GET_CART:
-      return Object.assign({}, state, { cart: action.items });
+      return Object.assign({}, state, { cart: action.cart });
     
     case GET_ORDERS:
       return Object.assign({}, state, { pastOrders: action.orders });
+
+    case SUBMIT_ORDER:
+      return Object.assign({}, state, { cart: action.newCart, pastOrders: [...state.pastOrders, state.cart]})
     
     default:
       return state;
@@ -47,12 +52,20 @@ export const addProduct = (itemId, quantity) => (dispatch) => {
 
 export const getCurrentCart = () => (dispatch) => {
   axios.get('/api/orders/cart')
-    .then(res => dispatch(getCart(res.data)));
+    .then(res => {
+      dispatch(getCart(res.data))});
 };
 
-export const fetchOrders = userId =>
+export const fetchOrders = () =>
   dispatch =>
-    axios.get(`/api/orders/user/${userId}`)
-      .then(res =>
-        dispatch(getOrders(res.data)))
+    axios.get(`/api/orders/user/orders`)
+      .then(res => {
+        dispatch(getOrders(res.data))})
       .catch(err => console.log(err));
+
+export const completeCheckout = () => (dispatch) => {
+  axios.put(`/api/orders/user/orders`)
+    .then((res) => {
+      dispatch(submitOrder(res.data))
+    })
+}
