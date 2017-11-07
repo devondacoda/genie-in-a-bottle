@@ -22,7 +22,7 @@ export default function reducer (state = {}, action) {
   }
 }
 
-export const authenticate = (email, password, formName, name) => (dispatch) => {
+export const authenticate = (email, password, formName, userName) => (dispatch) => {
   if (formName === 'login') {
     axios.post('/auth/login', { email, password })
       .then(user => dispatch(logIn(user.data)))
@@ -30,7 +30,7 @@ export const authenticate = (email, password, formName, name) => (dispatch) => {
       .then(() => history.push('/'))
       .catch(console.error);
   } else {
-    axios.post('/auth/signup', { name, email, password })
+    axios.post('/auth/signup', { userName, email, password })
       .then(user => dispatch(signUp(user.data)))
       .then(() => history.push('/'))
       .catch(console.error);
