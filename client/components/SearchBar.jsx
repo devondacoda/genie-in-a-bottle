@@ -11,7 +11,7 @@ class SearchBar extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const tofilter = this.props.products.filter(filtered => filtered.name.match(e.target.search.value));
+    const tofilter = this.props.products.filter(filtered => filtered.name.toLowerCase().match(e.target.search.value.toLowerCase()));
     this.props.fetchSearch(tofilter);
   }
 
