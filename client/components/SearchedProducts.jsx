@@ -3,7 +3,6 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 function SearchedProducts(props) {
-  console.log('hello', props);
   return (
     <div>
       <div className="my-4 ">
