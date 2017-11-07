@@ -5,7 +5,6 @@ import CartItem from './CartItem';
 import { getCurrentCart, completeCheckout } from '../store';
 
 class Cart extends Component {
-
   render() {
     const products = this.props.cart.products 
     ? this.props.cart.products
