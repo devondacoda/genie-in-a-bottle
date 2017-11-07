@@ -11,14 +11,14 @@ function UserProfile(props) {
     <div>
       {isLoggedIn
         ? <div>
-            <h1 className="text-center">{user.name}</h1>
-            <div>
-              <h2>Products</h2>
-              <AllOrders />
-            </div>
+          <h1 className="text-center">{user.name}</h1>
+          <div>
+            <h1>Your Orders</h1>
+            <AllOrders />
+          </div>
           </div>
         : <div>
-            <h1 className="text-center">Must log in to have a profile</h1>
+          <h1 className="text-center">Must log in to have a profile</h1>
           </div>
       }
     </div>
