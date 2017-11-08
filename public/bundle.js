@@ -10895,7 +10895,7 @@ function CheckoutSuccess(props) {
       { className: 'text-center' },
       ' ORDER SUCCESSFUL HOMIE '
     ),
-    orders[orders.length - 1].status ? _react2.default.createElement(
+    orders.length ? _react2.default.createElement(
       'div',
       null,
       _react2.default.createElement(

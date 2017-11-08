@@ -9,7 +9,7 @@ function CheckoutSuccess(props) {
     <div>
       <h1 className="text-center"> ORDER SUCCESSFUL HOMIE </h1>
         {
-          orders[orders.length - 1].status
+          orders.length
           ?
           <div>
             <li>
