@@ -18,7 +18,7 @@ class Reviews extends Component {
           <div>
             <h1>{review.title}</h1>
             <div>{review.stars}</div>
-            <p>by Mario(to change eagerLoad)</p>
+            <p>By: {review.user.name}</p>
             <p>{review.content}</p>
           </div>
               ))}
