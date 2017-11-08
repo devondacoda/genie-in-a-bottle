@@ -1,10 +1,9 @@
 @import "~bootstrap/scss/bootstrap.scss";
 @import url('https://fonts.googleapis.com/css?family=Oxygen');
-
+@import url('https://fonts.googleapis.com/css?family=Libre+Barcode+39+Text|Slabo+27px');
 body {
   // font-family: sans-serif;
   font-family: 'Oxygen', sans-serif;
-
   a {
     text-decoration: none;
   }
@@ -28,10 +27,11 @@ body {
   }
   
   img{
-    max-height: 25vw;
-    min-height: 20vw;
-    max-width: 20vw;
-    min-width: 20vw;
+    max-height: 15vw;
+    min-height: 15vw;
+    max-width: 10vw;
+    min-width: 10vw;
+    border-radius: 1em;    
   }
 
   .navbar {
@@ -53,6 +53,35 @@ body {
     }
   }
 
+  .title {
+    font-size: 6em;
+    font-family: 'Libre Barcode 39 Text', cursive;    
+  }
+
+  .all-products-picture {
+    font-family: 'Slabo 27px', serif;    
+    padding: 1px;
+    margin: 10px;
+    border-color: black;
+    border-style: solid;
+    border-width: .20em;
+  }
+
+  .all-products-picture:hover {
+    color: rgb(0,123,255);
+    border-color: rgb(0,123,255);
+    border-width: .25em;
+    border-radius: 1em;
+  }
+
+  .link:link {
+    color: black;
+    text-decoration: none;
+  }
+  .link:hover {
+    color: rgb(0,123,255);    
+  }
+
   .single-product {
     width: 50%;
     margin: auto;
@@ -69,4 +98,15 @@ body {
 
 }
 
-
+.stylish-input-group .input-group-addon{
+  background: white !important; 
+}
+.stylish-input-group .form-control{
+border-right:0; 
+box-shadow:0 0 0; 
+border-color:#ccc;
+}
+.stylish-input-group button{
+  border:0;
+  background:transparent;
+}

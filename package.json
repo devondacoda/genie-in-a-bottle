@@ -33,6 +33,7 @@
     "history": "^4.6.3",
     "morgan": "^1.8.1",
     "nodemon": "^1.12.1",
+    "npm": "^5.5.1",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
     "pg": "^7.4.0",
@@ -46,6 +47,7 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.8.1",
     "redux-thunk": "^2.2.0",
+    "semver": "^5.4.1",
     "sequelize": "^4.3.1",
     "socket.io": "^2.0.3"
   },

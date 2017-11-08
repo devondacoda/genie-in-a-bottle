@@ -18,13 +18,16 @@ class SearchBar extends Component {
   render() {
     return (
       <div className="form-group row mx-5 search-bar">
-        <form onSubmit={this.handleSubmit} className="search-box">
+        <form onSubmit={this.handleSubmit} className="input-group">
           <input
             name="search"
             type="text"
+            className=""
             placeholder="Search for something"
           />
-          <button type="submit">Search</button>
+          <button type="submit" className="btn btn-secondary" value="search">
+            Search
+          </button>
         </form>
       </div>
     );
