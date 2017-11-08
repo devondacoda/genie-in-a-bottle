@@ -15,4 +15,5 @@ export { default as Cart } from './Cart';
 export { default as CheckoutSuccess } from './CheckoutSuccess';
 export { default as SearchedProducts } from './SearchedProducts';
 export { default as Reviews } from './Reviews';
+export { default as AddReview } from './AddReview';
 export { Login, Signup } from './auth-form';

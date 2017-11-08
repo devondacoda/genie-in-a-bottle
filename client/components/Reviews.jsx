@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { fetchReviews } from '../store/reviews';
+import { AddReview } from './';
 
 class Reviews extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class Reviews extends Component {
             <p>{review.content}</p>
           </div>
               ))}
+        <AddReview />
       </div>
     );
   }

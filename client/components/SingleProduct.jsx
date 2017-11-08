@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import AddToCart from './AddToCart';
-import { Reviews } from './index';
+import { Reviews } from './';
 
 class getSingleProduct extends Component {
   constructor(props) {

@@ -19,6 +19,9 @@ router.route('/:productId')
   .post((req, res, next) => {
     const { productId } = req.params;
     Review.create(req.body)
-      .then(createdReview => res.json(createdReview))
+      .then(createdReview => createdReview.update({
+        userId: req.session.passport.user,
+        productId,
+      }))
       .catch(next);
   });
