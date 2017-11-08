@@ -17,7 +17,7 @@ class Reviews extends Component {
         {reviews.length && reviews.map(review => (
           <div>
             <h1>{review.title}</h1>
-            <div>{review.stars}</div>
+            <div>{review.stars} Stars</div>
             <p>By: {review.user.name}</p>
             <p>{review.content}</p>
           </div>
