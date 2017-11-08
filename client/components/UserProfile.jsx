@@ -10,7 +10,13 @@ function UserProfile(props) {
   return (
     <div className="my-5">
       {isLoggedIn
-        ? <div>
+        ? user.isAdmin 
+          ? <div>
+              <NavLink to="#">Edit Users</NavLink>
+              <NavLink to="#">Edit Orders</NavLink>
+              <NavLink to="#">Edit Products</NavLink>         
+            </div>
+          :<div>
             <h1 className="text-center">{user.name}</h1>
             <div>
               <h2 className="text-center prev-orders my-5">Previous Orders</h2>
