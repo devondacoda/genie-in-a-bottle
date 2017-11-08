@@ -96,24 +96,7 @@ router.route('/user/orders')
           status: 'Fulfilled',
         })
       })
-<<<<<<< HEAD
-      .then(checkedOutCart => {
-        return OrderItemList.findAll({
-          where: {
-            orderId: checkedOutCart.id
-          }
-        })
-      })
-      .then(arrOfOrderItems => {
-        arrOfOrderItems.map(item => {
-          Product.findById(item.productId)
-            .then(foundProduct => {
-              foundProduct.update({
-                inventory: foundProduct.inventory - item.quantity,
-              })
-            })
-=======
-    })
+    
     .then(checkedOutCart => {
       // const productsOnCart = checkedOutCart.products;
       return OrderItemList.findAll({
@@ -135,7 +118,6 @@ router.route('/user/orders')
           item.update({
             fixedPrice: price
           })
->>>>>>> master
         })
       })
       .then(() => {
@@ -145,4 +127,5 @@ router.route('/user/orders')
         res.status(200).json(newCart);
       })
   })
+});
 
