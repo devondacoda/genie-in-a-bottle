@@ -23,10 +23,15 @@ router.get('/cart', (req, res, next) => {
     where: { userId, isCart: true },
     include: [{ all: true, nested: true }] // Eager loading not working here? But works in route('/:orderId')
   })
-    .then((order) => {
-      res.json(order);
+  .then(order => {
+    order.update({
+      total: order.products.reduce((prev, curr) => {
+        return (curr.price * curr.orderItemLists.quantity) + prev
+      }, 0)
     })
-});
+    res.json(order);
+  })
+})
 
 router.route('/:orderId')
   .get((req, res, next) => {
@@ -91,6 +96,7 @@ router.route('/user/orders')
           status: 'Fulfilled',
         })
       })
+<<<<<<< HEAD
       .then(checkedOutCart => {
         return OrderItemList.findAll({
           where: {
@@ -106,6 +112,30 @@ router.route('/user/orders')
                 inventory: foundProduct.inventory - item.quantity,
               })
             })
+=======
+    })
+    .then(checkedOutCart => {
+      // const productsOnCart = checkedOutCart.products;
+      return OrderItemList.findAll({
+        where: {
+          orderId: checkedOutCart.id,
+        }
+      })
+    })
+    .then(arrOfOrderItems => {
+      arrOfOrderItems.map(item => {
+        Product.findById(item.productId)
+        .then(foundProduct => {
+          foundProduct.update({
+            inventory: foundProduct.inventory - item.quantity,
+          })
+          return [item, foundProduct.price]
+        })
+        .then(([item, price]) => {
+          item.update({
+            fixedPrice: price
+          })
+>>>>>>> master
         })
       })
       .then(() => {

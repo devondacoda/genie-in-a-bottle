@@ -8,7 +8,7 @@ const OrderItemList = db.define('orderItemLists', {
     defaultValue: 0,
   },
   fixedPrice: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL(13, 2),
   },
 })
 
