@@ -14,7 +14,7 @@ router.route('/')
     Order.create(req.body).then(createdOrder =>
       res.send(`Order #${createdOrder.id} was created `))
       .catch(next);
-    });
+  });
 
 // Route for getting current cart
 router.get('/cart', (req, res, next) => {
@@ -90,12 +90,13 @@ router.route('/user/orders')
       where: { userId, isCart: true },
       include: [{ all: true, nested: true }]
     })
-    .then(foundCart => {
-      return foundCart.update({
-        isCart: false,
-        status: 'Fulfilled',
+      .then(foundCart => {
+        return foundCart.update({
+          isCart: false,
+          status: 'Fulfilled',
+        })
       })
-    })
+    
     .then(checkedOutCart => {
       // const productsOnCart = checkedOutCart.products;
       return OrderItemList.findAll({
@@ -119,12 +120,12 @@ router.route('/user/orders')
           })
         })
       })
-    })
-    .then(() => {
-      return Order.create({status: 'Pending', isCart: true, userId})
-    })
-    .then((newCart) => {
-      res.status(200).json(newCart);
-    })
+      .then(() => {
+        return Order.create({status: 'Pending', isCart: true, userId})
+      })
+      .then((newCart) => {
+        res.status(200).json(newCart);
+      })
   })
+});
 

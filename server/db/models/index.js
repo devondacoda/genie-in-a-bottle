@@ -42,4 +42,5 @@ module.exports = {
   Product,
   Order,
   OrderItemList,
+  Review,
 };
