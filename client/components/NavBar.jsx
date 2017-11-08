@@ -20,7 +20,7 @@ function NavBar(props) {
           
           {
           user.email
-          ? <h5 className="text-center my-5 greeting">Make your wish {user.name}</h5>
+          ? <h5 className="text-center my-5 greeting">Make Your Wish, {user.name}</h5>
           : <h5 className="text-center my-5 greeting">You're a Guest? Change that maybe. (e.g. sign up)</h5>
           }
 
