@@ -1,11 +1,12 @@
 const router = require('express').Router();
-const { Review } = require('../db/models');
+const { Review, User } = require('../db/models');
 
 module.exports = router;
 
 router.route('/:productId').get((req, res, next) => {
   const { productId } = req.params;
   Review.findAll({
+    include: [{ model: User }],
     where: {
       productId,
     },

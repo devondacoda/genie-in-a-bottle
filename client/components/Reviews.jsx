@@ -7,19 +7,20 @@ class Reviews extends Component {
   constructor(props) {
     super(props);
   }
-  componentWillMonunt() {
+  componentDidMount() {
     this.props.fetchReviews(this.props.productId);
   }
   render() {
-    const reviews = this.props.reviews;
+    const { reviews } = this.props;
     return (
       <div>
-        {reviews.length && reviews.map(review => (<div>
-          <h1>review.title</h1>
-          <div>review.starts</div>
-          <p>by Mario(to change eagerLoad)</p>
-          <p>review.content</p>
-      </div>
+        {reviews.length && reviews.map(review => (
+          <div>
+            <h1>{review.title}</h1>
+            <div>{review.stars}</div>
+            <p>by Mario(to change eagerLoad)</p>
+            <p>{review.content}</p>
+          </div>
               ))}
       </div>
     );
