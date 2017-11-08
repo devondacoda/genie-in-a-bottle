@@ -15,6 +15,7 @@ function CheckoutSuccess(props) {
           <div className="text-center">
             <li>
               <h2>Your Order</h2>
+              <img src={orders[orders.length-1].products[0].picture} />
               <h3>Order Status: {orders[orders.length-1].status}</h3>
               <h4>Total Price: $ {orders[orders.length-1].total}</h4>
               <h4>Date of Purchase: {date.toString().slice(0, 16)}</h4>

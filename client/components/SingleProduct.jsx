@@ -29,7 +29,6 @@ class getSingleProduct extends Component {
           <img src={singleProduct.length && singleProduct[0].picture} alt="mario messed up" />
           <p>{singleProduct.length && singleProduct[0].description}</p>
           <h3>Stock: {singleProduct.length && singleProduct[0].inventory}</h3>
-          <h3>Category: </h3>
           <h3>Price: ${singleProduct.length && singleProduct[0].price}</h3>
           <form>
             <select onChange={this.handleChange}>
@@ -41,7 +40,7 @@ class getSingleProduct extends Component {
           </form>
           <AddToCart itemId={productId} quantity={this.state.quantity} stock={singleProduct.length && singleProduct[0].inventory} />
         </div>
-        <Reviews productId={productId} />
+        {/* <Reviews productId={productId} /> */}
       </div>
     );
   }
