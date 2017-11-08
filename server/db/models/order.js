@@ -9,6 +9,7 @@ const Order = db.define('order', {
   },
   status: {
     type: Sequelize.ENUM('Shipped', 'Pending', 'Fulfilled'),
+    allowNull: false,
   },
   total: {
     type: Sequelize.DECIMAL,
@@ -22,12 +23,7 @@ const Order = db.define('order', {
 });
 
 Order.findOrCreateCart = function (UserId) {
-  return Order.findOrCreate({
-    where: {
-      userId: UserId,
-      isCart: true,
-    },
-  });
+  return Order.findCreateFind({ where: { userId: UserId, isCart: true, status: 'Pending' } });
 };
 
 

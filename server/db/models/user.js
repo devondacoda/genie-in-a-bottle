@@ -7,6 +7,10 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,
@@ -29,8 +33,8 @@ module.exports = User;
  * instanceMethods
  */
 User.prototype.correctPassword = function (candidatePwd) {
-  return candidatePwd === this.password;
-  // return User.encryptPassword(candidatePwd, this.salt) === this.password;
+  // return candidatePwd === this.password;
+  return User.encryptPassword(candidatePwd, this.salt) === this.password;
 };
 
 /**

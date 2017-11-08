@@ -2,59 +2,60 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import CartItem from './CartItem';
+import { getCurrentCart, completeCheckout } from '../store';
 
-export default class Cart extends Component {
-  constructor() {
-    super();
-    this.state = {
-      cart: {
-        isCart: true,
-        status: 'Pending',
-        products: [
-          {
-            name: 'test',
-            description: 'test description....',
-            price: '$1000',
-          },
-          {
-            name: 'test2',
-            description: 'test description 2....',
-            price: '$2000',
-          },
-        ],
-      },
-    };
-  }
-
+class Cart extends Component {
   render() {
+    const products = this.props.cart.products 
+    ? this.props.cart.products
+    : []
+
     return (
       <div>
-        <div className="py-5">
+        <div className="my-5">
           <h1 className="text-center">Your Cart</h1>
+          <h3 className="text-center">Total: $ {this.props.cart.total}</h3>
         </div>
         {
-          this.state.cart.products.map(product => (
+          products.length
+          ? products.map(product => (
             <CartItem key={product.name} product={product} />
           ))
+          : <h2>Empty Cart</h2>
         }
-        <div className="py-5 mx-auto w-50">
-          <NavLink to="/checkout-success" className="btn btn-primary w-100">
+        <h3 className="text-center">Total: $ {this.props.cart.total}</h3>
+        <div className="my-5 mx-auto w-50">
+        {
+          products.length
+          ? 
+          <NavLink to="/checkout-success" className="btn btn-primary w-100" onClick={this.props.submitCheckout}>
             CHECKOUT
           </NavLink>
+          :
+          <button className="btn btn-primary w-100" disabled="true">
+            Cart Empty
+          </button>
+
+        }
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({ order: state.order }); // need to create
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     handleSubmit(A BUNCH OF PARAMS TO UPDATE ORDER) {
-//       event.preventDefault()
-//       dispatch(SUBMIT ORDER THUNK({PROBALY THE PARAMS AS THIS OBJ}))
-//     }
-//   }
-// }
+const mapStateToProps = state => {
+  const { cart } = state.order;
+  return {cart}
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    submitCheckout() {
+      dispatch(completeCheckout())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
 
 // PUT - edit quantity, delete item, flip cart to order, billing, shipping

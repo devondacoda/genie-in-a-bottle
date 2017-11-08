@@ -7,15 +7,11 @@ const { Order } = require('../db/models');
 router.route('/')
   .get((req, res, next) => {
     Product.findAll()
-      .then((allProducts) => {
-        res.json(allProducts);
-      })
+      .then(allProducts => res.json(allProducts))
       .catch(next);
   })
   .post((req, res, next) => {
-    Product.findOrCreate({
-      where: req.body,
-    })
+    Product.findCreateFind({ where: req.body })
       .then((createdProduct) => {
         res.status(201).json(createdProduct);
       })
@@ -57,14 +53,14 @@ router.route('/:productId')
       .catch(next);
   });
 
-  // Adding product to cart
+// Adding product to cart
 
   router.put('/:productId/add', (req, res, next) => {
     const productId = Number(req.params.productId);
     const userId = Number(req.session.passport.user);
     const { quantity } = req.body;
     Product.addToCart(productId, userId, quantity)
-      res.send('stop hanging')
+      .then((addedItem) => res.status(201).json(addedItem))
   })
 
 module.exports = router;

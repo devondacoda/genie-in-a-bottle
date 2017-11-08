@@ -4,9 +4,8 @@ import { Router } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
-import { Main, Login, Signup, UserHome, SingleProduct, Cart, CheckoutSuccess, AllProducts } from './components';
-import { me, fetchProducts } from './store';
-
+import { Main, Login, Signup, UserHome, SingleProduct, SearchedProducts, Cart, CheckoutSuccess, AllProducts, UserProfile } from './components';
+import { me, fetchProducts, getCurrentCart, fetchOrders } from './store';
 /**
  * COMPONENT
  */
@@ -26,10 +25,12 @@ class Routes extends Component {
             <Route exact path="/" component={UserHome} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            <Route path="/profile" component={UserProfile} />
             <Route path="/products" component={AllProducts} />
             <Route path="/product/:productId" component={SingleProduct} />
             <Route path="/cart" component={Cart} />
             <Route path="/checkout-success" component={CheckoutSuccess} />
+            <Route path="/search" component={SearchedProducts} />
             {
               isLoggedIn &&
                 <Switch>
@@ -62,6 +63,8 @@ const mapDispatch = (dispatch) => {
     loadInitialData() {
       dispatch(me());
       dispatch(fetchProducts());
+      dispatch(getCurrentCart());
+      dispatch(fetchOrders());
     },
   };
 };

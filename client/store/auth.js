@@ -1,5 +1,7 @@
 import axios from 'axios';
-import history from '../history'
+import history from '../history';
+import { getCurrentCart } from './order';
+import { me } from './';
 
 const LOG_IN = 'LOG_IN';
 const SIGN_UP = 'SIGN_UP';
@@ -21,14 +23,16 @@ export default function reducer (state = {}, action) {
   }
 }
 
-export const authenticate = (email, password, formName, userName) => (dispatch) => {
+export const authenticate = (email, password, formName, name) => (dispatch) => {
   if (formName === 'login') {
     axios.post('/auth/login', { email, password })
       .then(user => dispatch(logIn(user.data)))
+      .then(() => dispatch(getCurrentCart()))
+      .then(() => dispatch(me()))
       .then(() => history.push('/'))
       .catch(console.error);
   } else {
-    axios.post('/auth/signup', { userName, email, password })
+    axios.post('/auth/signup', { name, email, password })
       .then(user => dispatch(signUp(user.data)))
       .then(() => history.push('/'))
       .catch(console.error);

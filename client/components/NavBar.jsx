@@ -1,50 +1,71 @@
 import React, { Component } from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { logout } from '../store'; 
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logout } from '../store';
 import { SearchBar } from '../components';
 
 
 function NavBar(props) {
-  const { handleClick, isLoggedIn } = props;
+  const { handleClick, isLoggedIn, user } = props;
   return (
-    <nav className="navbar navbar-expand-md bg-primary navbar-dark">
-      <div className="container">
-        <NavLink className="navbar-brand" to="/">
-          <b className="">Genie in a Bottle</b>
-        </NavLink>
-        <SearchBar />
-        <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon" />{""}
-        </button>
-        <div className="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
-          <ul className="navbar-nav">
-            {isLoggedIn 
-              ? <div /> 
-              : <li className="nav-item">
-                <NavLink className="nav-link" to="/signup">
-                  Sign Up
+    <div className="navigation">
+
+      <nav className="navbar navbar-expand-md bg-primary navbar-dark">
+        {/* <div className="container"> */}
+          <NavLink className="navbar-brand pull-left" to="/">
+            <b>Genie in a Bottle</b>
+          </NavLink>
+          <SearchBar />
+          
+          {
+          user.email
+          ? <h5 className="text-center my-5 greeting">Make your wish {user.name}</h5>
+          : <h5 className="text-center my-5 greeting">You're a Guest? Change that maybe. (e.g. sign up)</h5>
+          }
+
+          <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon" />{''}
+          </button>
+          <div className="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/products">
+                  Browse
                 </NavLink>
-              </li>}
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/cart">
-                Cart
-              </NavLink>
+              </li>
+              {isLoggedIn
+              ? <li className="nav-item">
+                  <NavLink className="nav-link" to="/profile">
+                    Profile
+                  </NavLink>
+                </li>
+              : <li className="nav-item">
+                  <NavLink className="nav-link" to="/signup">
+                    Sign Up
+                  </NavLink>
+                </li>}
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/cart">
+                  Cart
+                </NavLink>
             </li>
-          </ul>
-          {isLoggedIn 
-            ? <NavLink to="/" 
+            </ul>
+            {isLoggedIn
+            ? <NavLink
+              to="/"
               className="btn navbar-btn ml-2 text-white btn-secondary"
-              onClick={handleClick}>
-              <i className="fa d-inline fa-lg fa-user-circle-o"/> Sign Out
-            </NavLink> 
+              onClick={handleClick}
+            >
+              <i className="fa d-inline fa-lg fa-user-circle-o" /> Sign Out
+              </NavLink>
             : <NavLink to="/login" className="btn navbar-btn ml-2 text-white btn-secondary">
               <i className="fa d-inline fa-lg fa-user-circle-o" /> Sign in
-            </NavLink>}
-        </div>
-      </div>
-    </nav>
+              </NavLink>}
+          </div>
+        {/* </div> */}
+      </nav>
+    </div>
   );
 }
 
@@ -52,15 +73,16 @@ function NavBar(props) {
 /**
  * CONTAINER
  */
-const mapState = (state) => ({
-    isLoggedIn: !!state.user.id
-  });
+const mapState = state => ({
+  isLoggedIn: !!state.user.id,
+  user: state.user,
+});
 
-const mapDispatch = (dispatch) => ({
-    handleClick () {
-      dispatch(logout());
-    }
-  });
+const mapDispatch = dispatch => ({
+  handleClick() {
+    dispatch(logout());
+  },
+});
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
