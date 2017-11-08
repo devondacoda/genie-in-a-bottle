@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import AddToCart from './AddToCart';
+import { Reviews } from './Reviews';
 
 class getSingleProduct extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class getSingleProduct extends Component {
           </select>
         </form>
         <AddToCart itemId={productId} quantity={this.state.quantity} stock={singleProduct.length && singleProduct[0].inventory} />
+        <Reviews productId />
         </div>
       </div>
     );

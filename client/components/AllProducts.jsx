@@ -26,6 +26,7 @@ function AllProducts(props) {
             ))}
         </ul>
       </div>
+      
     </div>
   );
 }
