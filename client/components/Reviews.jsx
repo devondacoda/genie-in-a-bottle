@@ -23,7 +23,7 @@ class Reviews extends Component {
             <p>{review.content}</p>
           </div>
               ))}
-        <AddReview />
+        <AddReview productId={this.props.productId} />
       </div>
     );
   }

@@ -18,7 +18,7 @@ class AddReview extends Component {
     const value = event.target.value;
     const name = event.target.name;
     this.setState({ [name]: value });
-    this.props.createReview(this.state);
+    this.props.createReview(this.state, this.props.productId);
   }
 
 
