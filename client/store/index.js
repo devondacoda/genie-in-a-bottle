@@ -6,10 +6,11 @@ import user from './user';
 import products from './products';
 import order from './order';
 import search from './filterList';
+import reviews from './reviews';
 import { authenticate } from './auth';
 
 const reducer = combineReducers({
-  user, products, order, authenticate, search,
+  user, products, order, authenticate, search, reviews,
 });
 
 const middleware = composeWithDevTools(applyMiddleware(

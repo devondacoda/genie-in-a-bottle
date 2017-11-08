@@ -54,7 +54,7 @@ function product() {
 function review() {
   Faker.seed(124);
   const reviews = [];
-  for (let i = 1; i < 100; i++) {
+  for (let i = 1; i < 10; i++) {
     reviews.push(Review.build({
       title: Faker.commerce.productName(),
       content: Faker.lorem.paragraph(3),

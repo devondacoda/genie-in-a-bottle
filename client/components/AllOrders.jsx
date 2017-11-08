@@ -16,7 +16,6 @@ class AllOrders extends Component {
             <h4>Total Price: $ {order.total}</h4>
             <h4 className="mb-5">Date of Purchase: {order.time}</h4>
           </li>
-
         ))}
       </div>
     );

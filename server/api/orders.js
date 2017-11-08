@@ -14,7 +14,7 @@ router.route('/')
     Order.create(req.body).then(createdOrder =>
       res.send(`Order #${createdOrder.id} was created `))
       .catch(next);
-    });
+  });
 
 // Route for getting current cart
 router.get('/cart', (req, res, next) => {
@@ -90,11 +90,29 @@ router.route('/user/orders')
       where: { userId, isCart: true },
       include: [{ all: true, nested: true }]
     })
-    .then(foundCart => {
-      return foundCart.update({
-        isCart: false,
-        status: 'Fulfilled',
+      .then(foundCart => {
+        return foundCart.update({
+          isCart: false,
+          status: 'Fulfilled',
+        })
       })
+<<<<<<< HEAD
+      .then(checkedOutCart => {
+        return OrderItemList.findAll({
+          where: {
+            orderId: checkedOutCart.id
+          }
+        })
+      })
+      .then(arrOfOrderItems => {
+        arrOfOrderItems.map(item => {
+          Product.findById(item.productId)
+            .then(foundProduct => {
+              foundProduct.update({
+                inventory: foundProduct.inventory - item.quantity,
+              })
+            })
+=======
     })
     .then(checkedOutCart => {
       // const productsOnCart = checkedOutCart.products;
@@ -117,14 +135,14 @@ router.route('/user/orders')
           item.update({
             fixedPrice: price
           })
+>>>>>>> master
         })
       })
-    })
-    .then(() => {
-      return Order.create({status: 'Pending', isCart: true, userId})
-    })
-    .then((newCart) => {
-      res.status(200).json(newCart);
-    })
+      .then(() => {
+        return Order.create({status: 'Pending', isCart: true, userId})
+      })
+      .then((newCart) => {
+        res.status(200).json(newCart);
+      })
   })
 
