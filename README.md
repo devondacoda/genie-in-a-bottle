@@ -1,4 +1,8 @@
 # Genie in a Bottle
+
+
+## Live Demo: https://genie-in-a-bottle.herokuapp.com/
+
 ## Getting Started
 - Terminal Commands
  1. Clone repo
