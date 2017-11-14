@@ -10,13 +10,15 @@ export default function (state = [], action) {
   switch (action.type) {
     case GET_REVIEWS:
       return action.reviews;
+      case POST_REVIEW:
+      return action.review // fix
     default:
       return state;
   }
 }
 
 export const fetchReviews = product => (dispatch) => {
-  axios.get(`/api/review/${product}`).then((res) => {
+  axios.get(`/api/review/${1}`).then((res) => {
     dispatch(getReviews(res.data));
   });
 };

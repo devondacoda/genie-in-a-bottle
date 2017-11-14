@@ -17,11 +17,10 @@ router.route('/:productId')
   })
 
   .post((req, res, next) => {
+    console.log(req.session, '!#!#!#!##!#!#')
+    console.log(req.body,'BODY');
     const { productId } = req.params;
     Review.create(req.body)
-      .then(createdReview => createdReview.update({
-        userId: req.session.passport.user,
-        productId,
-      }))
+      .then(createdReview => createdReview.setUser(req.session.passport.user))
       .catch(next);
   });

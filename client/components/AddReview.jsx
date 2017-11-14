@@ -6,19 +6,20 @@ class AddReview extends Component {
   constructor() {
     super();
     this.state = {
-      title: '',
-      stars: '',
-      content: '',
+      title: '1',
+      stars: '5',
+      content: 'dsfsd',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const value = event.target.value;
-    const name = event.target.name;
-    this.setState({ [name]: value });
-    this.props.createReview(this.state, this.props.productId);
+    consle.log(this.props,'fsasfasf')
+    // const value = event.target.value;
+    // const name = event.target.name;
+    // this.setState({ [name]: value });
+    this.props.createReview(this.state, 1);
   }
 
 
